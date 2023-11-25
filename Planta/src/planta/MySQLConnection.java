@@ -9,9 +9,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 
 public class MySQLConnection {
-    private static final String url = "jdbc:mysql://localhost:3306/PlantaN";
-    private static final String user = "root";
-    private static final String password = "MneJDPQ077.";
+    private static final String url = "jdbc:mysql://localhost:3306/plantan";
+    private static final String user = "jerson";
+    private static final String password = "jerson@skate";
 
     private MySQLConnection() {
     }
@@ -25,25 +25,5 @@ public class MySQLConnection {
             System.out.println("Error al conectar");
         }
         return null;
-    }
-    
-    
-     public static void main(String[] args) {
-        Connection con = getConnection();
-        Statement st;
-        ResultSet rs;
-        try {
-            st = con.createStatement();
-            rs = st.executeQuery("Call TraerIdEmpleado();");
-            
-            // while para imprimir todos los datos por tupla de el select
-            while (rs.next()) {
-                System.out.println(rs.getInt(1));
-            }
-            
-            con.close();
-        } catch (Exception e) {
-            System.out.println("Error");
-        }
     }
 }
