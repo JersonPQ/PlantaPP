@@ -31,53 +31,70 @@ public class MenuPrincipal extends javax.swing.JFrame {
         BtnConsultas = new javax.swing.JButton();
         BtnCPlanillas = new javax.swing.JButton();
         BtnMarcas = new javax.swing.JButton();
+        BTNCrud = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         BtnConsultas.setBackground(new java.awt.Color(0, 0, 0));
+        BtnConsultas.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsultas.setText("CONSULTAS");
         BtnConsultas.setMaximumSize(new java.awt.Dimension(77, 28));
         BtnConsultas.setMinimumSize(new java.awt.Dimension(77, 28));
+        BtnConsultas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnConsultasActionPerformed(evt);
+            }
+        });
 
         BtnCPlanillas.setBackground(new java.awt.Color(0, 0, 0));
+        BtnCPlanillas.setForeground(new java.awt.Color(255, 255, 255));
         BtnCPlanillas.setText("CÁLCULO DE PLANILLAS");
         BtnCPlanillas.setMaximumSize(new java.awt.Dimension(77, 28));
         BtnCPlanillas.setMinimumSize(new java.awt.Dimension(77, 28));
 
         BtnMarcas.setBackground(new java.awt.Color(0, 0, 0));
+        BtnMarcas.setForeground(new java.awt.Color(255, 255, 255));
         BtnMarcas.setText("MARCAS");
+
+        BTNCrud.setBackground(new java.awt.Color(0, 0, 0));
+        BTNCrud.setForeground(new java.awt.Color(255, 255, 255));
+        BTNCrud.setText("CRUD");
+        BTNCrud.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNCrudActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(85, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnCPlanillas, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(74, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BtnCPlanillas, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BtnConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtnMarcas, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2))
+                    .addComponent(BTNCrud, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(85, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(86, Short.MAX_VALUE)
-                    .addComponent(BtnMarcas, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(87, 87, 87)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(164, 164, 164)
+                .addGap(24, 24, 24)
+                .addComponent(BtnMarcas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(BtnConsultas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(BtnCPlanillas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(50, 50, 50)
-                    .addComponent(BtnMarcas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(359, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(BTNCrud, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -93,6 +110,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BTNCrudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNCrudActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        MenuCrud MCrud = new MenuCrud();
+        MCrud.setVisible(true);
+    }//GEN-LAST:event_BTNCrudActionPerformed
+
+    private void BtnConsultasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsultasActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        MenúConsultas MConsultas = new MenúConsultas();
+        MConsultas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtnConsultasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,6 +162,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTNCrud;
     private javax.swing.JButton BtnCPlanillas;
     private javax.swing.JButton BtnConsultas;
     private javax.swing.JButton BtnMarcas;

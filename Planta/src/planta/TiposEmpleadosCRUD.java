@@ -70,6 +70,7 @@ public class TiposEmpleadosCRUD extends javax.swing.JFrame {
         jLabel37 = new javax.swing.JLabel();
         eliminarFDIdEmpleado = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        BtnVolver = new javax.swing.JButton();
         BTNConsultarCalendario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -429,17 +430,31 @@ public class TiposEmpleadosCRUD extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("<html>Esta funcion solo estará disponible para los Tipos que no hayan sido usados en un empleado<html>");
 
+        BtnVolver.setBackground(new java.awt.Color(0, 0, 0));
+        BtnVolver.setForeground(new java.awt.Color(255, 255, 255));
+        BtnVolver.setText("Volver");
+        BtnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel37)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(eliminarFDIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel37)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addComponent(eliminarFDIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(BtnVolver)))
                 .addContainerGap())
-            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,7 +465,8 @@ public class TiposEmpleadosCRUD extends javax.swing.JFrame {
                     .addComponent(jLabel37))
                 .addGap(35, 35, 35)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BtnVolver))
         );
 
         BTNConsultarCalendario.setBackground(new java.awt.Color(0, 0, 0));
@@ -767,6 +783,15 @@ public class TiposEmpleadosCRUD extends javax.swing.JFrame {
         
     }//GEN-LAST:event_BTNConsultarCalendarioActionPerformed
 
+    private void BtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVolverActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        
+        MenuCrud MCrud = new MenuCrud();
+        MCrud.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtnVolverActionPerformed
+
     
     /**
      * @param args the command line arguments
@@ -808,6 +833,7 @@ public class TiposEmpleadosCRUD extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNConsultarCalendario;
+    private javax.swing.JButton BtnVolver;
     private javax.swing.JTextField agregarFDCostoH;
     private javax.swing.JTextField agregarFDCostoHD;
     private javax.swing.JTextField agregarFDCostoHE;

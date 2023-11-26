@@ -36,6 +36,15 @@ public class MenúConsultas extends javax.swing.JFrame {
         BtnConsulta6 = new javax.swing.JButton();
         BtnConsulta7 = new javax.swing.JButton();
         BtnConsulta8 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TxtArea = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        TxtIdEmpleado = new javax.swing.JTextField();
+        TxtFechaI = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        TxtFechaF = new javax.swing.JTextField();
+        BtnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,9 +57,11 @@ public class MenúConsultas extends javax.swing.JFrame {
         jLabel1.setText("Consultas");
 
         BtnConsulta3.setBackground(new java.awt.Color(0, 0, 0));
+        BtnConsulta3.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta3.setText("<html>Empleados sin marca de salida por periodo de tiempo</html>");
 
         BtnConsulta1.setBackground(new java.awt.Color(0, 0, 0));
+        BtnConsulta1.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta1.setText("<html><p>Ausencias por</p><p>periodo de tiempo</p></html>");
         BtnConsulta1.setAutoscrolls(true);
         BtnConsulta1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -58,7 +69,8 @@ public class MenúConsultas extends javax.swing.JFrame {
         BtnConsulta1.setVerifyInputWhenFocusTarget(false);
 
         BtnConsulta2.setBackground(new java.awt.Color(0, 0, 0));
-        BtnConsulta2.setText("<html>Tarías por periodode tiempo</html>");
+        BtnConsulta2.setForeground(new java.awt.Color(255, 255, 255));
+        BtnConsulta2.setText("<html>Tardías por periodo de tiempo</html>");
         BtnConsulta2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnConsulta2ActionPerformed(evt);
@@ -66,6 +78,7 @@ public class MenúConsultas extends javax.swing.JFrame {
         });
 
         BtnConsulta4.setBackground(new java.awt.Color(0, 0, 0));
+        BtnConsulta4.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta4.setText("<html>Monto ganado por empleado por periodo de tiempo</html>");
         BtnConsulta4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,42 +87,92 @@ public class MenúConsultas extends javax.swing.JFrame {
         });
 
         BtnConsulta5.setBackground(new java.awt.Color(0, 0, 0));
+        BtnConsulta5.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta5.setText("<html>Información general de un empleado</html>");
 
         BtnConsulta6.setBackground(new java.awt.Color(0, 0, 0));
+        BtnConsulta6.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta6.setText("<html>Información general de empleados por departamento</html>");
 
         BtnConsulta7.setBackground(new java.awt.Color(0, 0, 0));
+        BtnConsulta7.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta7.setText("<html>Empleados a cargo de un supervisor</html>");
 
         BtnConsulta8.setBackground(new java.awt.Color(0, 0, 0));
+        BtnConsulta8.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta8.setText("<html>Empleados dados de baja en un periodo de tiempo</html>");
+
+        TxtArea.setColumns(20);
+        TxtArea.setRows(5);
+        jScrollPane1.setViewportView(TxtArea);
+
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Id Empleado");
+
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Fecha Inicial");
+
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Fecha Final");
+
+        BtnVolver.setBackground(new java.awt.Color(0, 0, 0));
+        BtnVolver.setForeground(new java.awt.Color(255, 255, 255));
+        BtnVolver.setText("Volver");
+        BtnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnVolverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(414, 414, 414)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(BtnConsulta1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnConsulta2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(BtnConsulta3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnConsulta4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnConsulta5, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnConsulta6, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BtnConsulta7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnConsulta8, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(jScrollPane1))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(BtnConsulta1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BtnConsulta2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                                .addComponent(BtnConsulta3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(BtnConsulta4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(BtnConsulta5, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(BtnConsulta6, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(BtnConsulta7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BtnConsulta8, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(BtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(414, 414, 414)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(530, 530, 530)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(TxtFechaF, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                                    .addComponent(TxtFechaI)
+                                    .addComponent(TxtIdEmpleado))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -134,7 +197,26 @@ public class MenúConsultas extends javax.swing.JFrame {
                             .addComponent(BtnConsulta7)
                             .addComponent(BtnConsulta8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(2, 2, 2)))
-                .addGap(506, 506, 506))
+                .addGap(54, 54, 54)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(TxtIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(TxtFechaI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(TxtFechaF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(239, 239, 239)
+                        .addComponent(BtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -158,6 +240,15 @@ public class MenúConsultas extends javax.swing.JFrame {
     private void BtnConsulta4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsulta4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnConsulta4ActionPerformed
+
+    private void BtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVolverActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        
+        MenuPrincipal MPrincipal = new MenuPrincipal();
+        MPrincipal.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtnVolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,7 +294,16 @@ public class MenúConsultas extends javax.swing.JFrame {
     private javax.swing.JButton BtnConsulta6;
     private javax.swing.JButton BtnConsulta7;
     private javax.swing.JButton BtnConsulta8;
+    private javax.swing.JButton BtnVolver;
+    private javax.swing.JTextArea TxtArea;
+    private javax.swing.JTextField TxtFechaF;
+    private javax.swing.JTextField TxtFechaI;
+    private javax.swing.JTextField TxtIdEmpleado;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
