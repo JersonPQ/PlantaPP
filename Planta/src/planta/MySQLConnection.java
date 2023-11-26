@@ -10,8 +10,8 @@ import java.sql.ResultSet;
 
 public class MySQLConnection {
     private static final String url = "jdbc:mysql://localhost:3306/plantan";
-    private static final String user = "jerson";
-    private static final String password = "jerson@skate";
+    private static final String user = "root";
+    private static final String password = "CR07mrl02.";
 
     private MySQLConnection() {
     }
