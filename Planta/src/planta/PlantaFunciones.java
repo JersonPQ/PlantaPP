@@ -75,7 +75,6 @@ public class PlantaFunciones {
         
     }
     
-    
     public static String MostrarEmpleados(){
         Connection con = getConnection();
         Statement st;
@@ -105,8 +104,156 @@ public class PlantaFunciones {
         } catch (Exception e) {
             System.out.println("Error");
         }
-        
         return "";
+    }
+    
+    // CALENDARIOS    
+    public static String[] getNombresCalendarios(){
+        Connection con = getConnection();
+        Statement st;
+        ResultSet rs;
+        String ids = "";
+        String resultado = "";
+        String[] resultadoFinal;
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery("Call traernombrecalendario();");
+            
+            while (rs.next()) {      
+                ids += rs.getInt(1) + ",";
+                resultado += rs.getString(2) + ",";
+            }
+            
+            resultadoFinal = new String[]{ids, resultado};
+            con.close();
+            return resultadoFinal;
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+        return null;
+    }
+    
+    public static String consultarDiasTrabajadosPorCalendario(int idCalendarioConsulta){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call consultarDiasTrabajadosPorCalendario(?)}");
+            ResultSet rs;
+            stmt.setInt(1, idCalendarioConsulta);
+            rs = stmt.executeQuery();
+            
+            String resultado = "Día            Hora Entrada      Hora Salida         Horas Laborables\n";
+            while (rs.next()) {                
+                resultado += rs.getString(1) + "\t" + rs.getTime(2) + "\t" +
+                        rs.getTime(3) + "\t\t" + rs.getInt(4) + "\n";
+            }
+            
+            con.close();
+            stmt.close();
+            return resultado;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al obtener los datos";
+        }
+    }
+    
+    public static String consultarDiasFeriadosPorCalendario(int idCalendarioConsulta){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call consultarDiasFeriadosPorCalendario(?)}");
+            ResultSet rs;
+            stmt.setInt(1, idCalendarioConsulta);
+            rs = stmt.executeQuery();
+            
+            String resultado = "";
+            while (rs.next()) {                
+                resultado += rs.getInt(1) + "\t" + rs.getString(2) + "\t";
+                if (rs.getString(3).equals("D")) {
+                    resultado += "Pago Doble\n";
+                } else {
+                    resultado += "Pago Normal\n";
+                }
+            }
+            
+            con.close();
+            stmt.close();
+            return resultado;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al obtener los datos";
+        }
+    }
+    
+    public static String consultarTipoDPagoPorCalendario(int idCalendarioConsulta){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call consultarTipoDPagoPorCalendario(?)}");
+            ResultSet rs;
+            stmt.setInt(1, idCalendarioConsulta);
+            rs = stmt.executeQuery();
+            
+            String resultado = "";
+            while (rs.next()) {                
+                resultado += rs.getString(1) + "\n";
+            }
+            
+            con.close();
+            stmt.close();
+            return resultado;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al obtener los datos";
+        }
+    }
+    
+    public static String anadirCalendario(String nombreCalendario, int tipoDPago){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call anadirCalendario(?, ?, ?)}");
+            stmt.setString(1, nombreCalendario);
+            stmt.setInt(2, tipoDPago);
+            
+            stmt.registerOutParameter(3, Types.NVARCHAR);
+            
+            stmt.execute();
+            
+            String Salida = stmt.getString(3);
+            
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al añadir el calendario";
+        }
+        
+    }
+    
+    public static String modificarCalendario(int idCalendario, int idTipoPago){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call modificarCalendario(?, ?, ?)}");
+            stmt.setInt(1, idCalendario);
+            stmt.setInt(2, idTipoPago);
+            
+            stmt.registerOutParameter(3, Types.NVARCHAR);
+            
+            stmt.execute();
+            
+            String Salida = stmt.getString(3);
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al modificar el calendario";
+        }
     }
     
     public static boolean isNumeric(String cadena) {
@@ -242,7 +389,6 @@ public class PlantaFunciones {
             System.out.println(e);
             return 0;
         }
-        
     }
     
     public static boolean InsertarEmpleado( String Nombre, String Apellidos, String FechaIngreso, String FechaSalida, int SalarioBruto, 
@@ -297,6 +443,28 @@ public class PlantaFunciones {
         
     }
     
+    public static String eliminarCalendario(int idCalendario){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call eliminarCalendario(?, ?)}");
+            stmt.setInt(1, idCalendario);
+            
+            stmt.registerOutParameter(2, Types.NVARCHAR);
+            
+            stmt.execute();
+            
+            String Salida = stmt.getString(2);
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al eliminar el calendario";
+        }
+        
+    }
     
     public static String MostrarTiposEmpleados(){
         Connection con = getConnection();
@@ -324,6 +492,33 @@ public class PlantaFunciones {
         }
         
         return "";
+    }
+    
+    // DEPARTAMENTOS
+    public static String[] getNombresDepartamentos(){
+        Connection con = getConnection();
+        Statement st;
+        ResultSet rs;
+        String ids = "";
+        String resultado = "";
+        String[] resultadoFinal;
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery("Call traernombredepartamento();");
+            
+            while (rs.next()) {      
+                ids += rs.getInt(1) + ",";
+                resultado += rs.getString(2) + ",";
+            }
+            
+            resultadoFinal = new String[]{ids, resultado};
+            con.close();
+            return resultadoFinal;
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+      
+        return null;
     }
     
     
@@ -401,7 +596,180 @@ public class PlantaFunciones {
             System.out.println(e);
             return false;
         }
+    }
+    
+    public static String anadirDepartamento(String nombreDep){
+        Connection con = getConnection();
         
+        try {
+            CallableStatement stmt = con.prepareCall("{call anadirDepartamento(?, ?)}");
+            stmt.setString(1, nombreDep);
+            
+            stmt.registerOutParameter(2, Types.NVARCHAR);
+            
+            stmt.execute();
+            
+            String Salida = stmt.getString(2);
+            
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al añadir el departamento";
+        }
+    }
+    
+    public static String modificarDepartamento(int idDepModificar, String nuevoNombre){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call modificarDepartamento(?, ?, ?)}");
+            stmt.setInt(1, idDepModificar);
+            stmt.setString(2, nuevoNombre);
+            
+            stmt.registerOutParameter(3, Types.NVARCHAR);
+            
+            stmt.execute();
+            
+            String Salida = stmt.getString(3);
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al modificar el departamento";
+        }
+        
+    }
+    
+    public static String eliminarDepartamento(int idCalendario){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call eliminarDepartamento(?, ?)}");
+            stmt.setInt(1, idCalendario);
+            
+            stmt.registerOutParameter(2, Types.NVARCHAR);
+            
+            stmt.execute();
+            
+            String Salida = stmt.getString(2);
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al eliminar el calendario";
+        }
+        
+    }
+    
+    // DIAS FERIADOS
+    
+    public static String[] consultarDiasFeriadosPorCalendarioID(int idCalendarioConsulta){
+        Connection con = getConnection();
+        String ids = "";
+        String resultado = "";
+        String[] resultadoFinal;
+        try {
+            CallableStatement stmt = con.prepareCall("{call consultarDiasFeriadosPorCalendarioID(?)}");
+            ResultSet rs;
+            stmt.setInt(1, idCalendarioConsulta);
+            rs = stmt.executeQuery();
+            
+            while (rs.next()) {   
+                ids += rs.getInt(1) + ",";
+                resultado += rs.getInt(2) + "-" + rs.getString(3) + ",";
+            }
+            
+            resultadoFinal = new String[]{ids, resultado};
+            con.close();
+            stmt.close();
+            return resultadoFinal;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+    
+    public static String anadirDiaFeriado(int idCalendario, int numDia, int numMes, String tipoPago){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call anadirDiaFeriado(?, ?, ?, ?, ?)}");
+            stmt.setInt(1, idCalendario);
+            stmt.setInt(2, numDia);
+            stmt.setInt(3, numMes);
+            stmt.setString(4, tipoPago);
+            
+            stmt.registerOutParameter(5, Types.NVARCHAR);
+            
+            stmt.execute();
+            
+            String Salida = stmt.getString(5);
+            
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al añadir el dia feriado";
+        }
+        
+    }
+    
+    public static String modificarDiaFeriado(int idCalendario, int idDiaCambiar, int numDia, int numMes, String tipoPaga){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call modificarDiaFeriado(?, ?, ?, ?, ?, ?)}");
+            stmt.setInt(1, idCalendario);
+            stmt.setInt(2, idDiaCambiar);
+            stmt.setInt(3, numDia);
+            stmt.setInt(4, numMes);
+            stmt.setString(5, tipoPaga);
+            
+            stmt.registerOutParameter(6, Types.NVARCHAR);
+            
+            stmt.execute();
+            
+            String Salida = stmt.getString(6);
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al modificar el dia feriado";
+        }
+        
+    }
+    
+    public static String eliminarDiaFeriado(int idDiaBorrar){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call eliminarDiaFeriado(?, ?)}");
+            stmt.setInt(1, idDiaBorrar);
+            
+            stmt.registerOutParameter(2, Types.NVARCHAR);
+            
+            stmt.execute();
+            
+            String Salida = stmt.getString(2);
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al eliminar el dia feriado";
+        }
     }
     
     public static boolean EliminarEmpleado( int IdEmpleado){
