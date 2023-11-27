@@ -276,10 +276,16 @@ public class PlantaFunciones {
         if(AneoIngreso>AneoSalida){
             return false;
         }
+        else if(AneoIngreso<AneoSalida){
+            return true;
+        }
         int MesIngreso = Integer.parseInt(FechaIngreso.substring(5, 7));
         int MesSalida = Integer.parseInt(FechaSalida.substring(5, 7));
         if(MesIngreso>MesSalida){
             return false;
+        }
+        else if(MesIngreso<MesSalida){
+            return true;
         }
         int DiaIngreso = Integer.parseInt(FechaIngreso.substring(8));
         int DiaSalida = Integer.parseInt(FechaSalida.substring(8));
@@ -1040,7 +1046,174 @@ public class PlantaFunciones {
         return "";
     }
     
+    public static String Consulta3(String FechaI, String FechaF){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{Call Consulta3(?,?)}");
+            stmt.setString(1, FechaI);
+            stmt.setString(2, FechaF);
+            ResultSet rs = null;
+            
+            
+            stmt.execute();
+            rs = stmt.getResultSet();
+            String str = "IdEmpleado" + "\t\t\t|" + "Nombre Empleado" + "\t\t\t|\n\n";
+            
+            // while para imprimir todos los datos por tupla de el select
+            while (rs.next()) {
+                str += rs.getInt(1) + "\t\t\t|" +
+                        rs.getString(2) + "\t\t\t|" + "\n";
+
+            }
+            
+            con.close();
+            stmt.close();
+            return str;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al realizar Consulta 3";
+        }
+        
+    }
     
+    public static String Consulta5(int IdEmpleado){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{Call Consulta5(?)}");
+            stmt.setInt(1, IdEmpleado);
+            ResultSet rs = null;
+            
+            
+            stmt.execute();
+            rs = stmt.getResultSet();
+            String str = "IdEmpleado" + "\t\t\t\t|" + "Nombre Empleado" + "\t\t\t\t|" + "Apellidos Empleado" + "\t\t\t\t|" + "Fecha Ingreso" 
+                    + "\t\t\t\t|" + "FechaSalida" + "\t\t\t\t|" + "Salario Bruto" + "\t\t\t\t|" + "Salario Hora" + "\t\t\t\t|" + "Planta" 
+                    + "\t\t\t\t|" + "Departamento" + "\t\t\t\t|" + "Supervisor" + "\t\t\t\t|" + "Puesto" + "\t\t\t\t|\n\n";
+            
+            // while para imprimir todos los datos por tupla de el select
+            while (rs.next()) {
+                str += rs.getInt(1) + "\t\t\t\t|" +
+                        rs.getString(2) + "\t\t\t\t|" +
+                        rs.getString(3) + "\t\t\t\t|" +
+                        rs.getDate(4) + "\t\t\t\t|" +
+                        rs.getDate(5) + "\t\t\t\t|" +
+                        rs.getInt(6) + "\t\t\t\t|" +
+                        rs.getInt(7) + "\t\t\t\t|" +
+                        rs.getString(8) + "\t\t\t\t|" +
+                        rs.getString(9) + "\t\t\t\t|" +
+                        rs.getInt(10) + "\t\t\t\t|" +
+                        rs.getString(11) + "\t\t\t\t|" + "\n";
+
+            }
+            
+            con.close();
+            stmt.close();
+            return str;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al realizar Consulta 3";
+        }
+        
+    }
+    
+    public static String Consulta7(int IdSupervisor){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{Call Consulta7(?)}");
+            stmt.setInt(1, IdSupervisor);
+            ResultSet rs = null;
+            
+            
+            stmt.execute();
+            rs = stmt.getResultSet();
+            String str = "IdEmpleado" + "\t|" + "Nombre Empleado" + "\t|" + "Apellidos Empleado" + "\t|" + "Fecha Ingreso" 
+                    + "\t|" + "FechaSalida" + "\t|" + "Salario Bruto" + "\t|" + "Salario Hora" + "\t|" + "Planta" 
+                    + "\t|" + "Departamento" + "\t|" + "Puesto" + "\t|\n\n";
+            
+            // while para imprimir todos los datos por tupla de el select
+            while (rs.next()) {
+                str += rs.getInt(1) + "\t|" +
+                        rs.getString(2) + "\t|" +
+                        rs.getString(3) + "\t|" +
+                        rs.getDate(4) + "\t|" +
+                        rs.getDate(5) + "\t|" +
+                        rs.getInt(6) + "\t|" +
+                        rs.getInt(7) + "\t|" +
+                        rs.getString(8) + "\t|" +
+                        rs.getString(9) + "\t|" +
+                        rs.getString(11) + "\t|" + "\n";
+
+            }
+            
+            con.close();
+            stmt.close();
+            return str;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al realizar Consulta 3";
+        }
+        
+    }
+    
+    
+    public static String consultaTardiasPorPeriodoTiempo(String fechaInicial, String fechaFinal){
+        Connection con = getConnection();
+        ResultSet rs;
+        String Salida = "";
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call tardiasPorPeriodoTiempo(?, ?)}");
+            stmt.setString(1, fechaInicial);
+            stmt.setString(2, fechaFinal);
+            
+            rs = stmt.executeQuery();
+            
+            Salida += "Id Empleado \t Nombre \t Apellidos \t\t Hora Entrada \t Hora llegada \t Dia marca \n";
+            
+            while (rs.next()) {                
+                Salida += rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t" + rs.getTime(4) + "\t" +
+                        rs.getTime(5) + "\t" + rs.getDate(6) + "\n";
+            }
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al consultar tardias";
+        }
+    }
+    
+    public static String consultaEmpleadosDeBajaPorPeriodo(String fechaInicial, String fechaFinal){
+        Connection con = getConnection();
+        ResultSet rs;
+        String Salida = "";
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call empleadosDeBajaPorPeriodo(?, ?)}");
+            stmt.setString(1, fechaInicial);
+            stmt.setString(2, fechaFinal);
+            
+            rs = stmt.executeQuery();
+            
+            Salida += "Nombre \t\t Apellidos \t\t\t Fecha ingreso \t\t Fecha salida\n";
+            
+            while (rs.next()) {                
+                Salida += rs.getString(1) + "\t\t" + rs.getString(2) + "\t\t\t" +
+                        rs.getDate(3) + "\t\t" + rs.getDate(4) + "\n";
+            }
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al consultar empleados de baja";
+        }
+    }
     
     public static void main(String[] args) {
         System.out.println(ObtenerSBruto(1));

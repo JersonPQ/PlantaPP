@@ -57,6 +57,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         BtnMarcas.setBackground(new java.awt.Color(0, 0, 0));
         BtnMarcas.setForeground(new java.awt.Color(255, 255, 255));
         BtnMarcas.setText("MARCAS");
+        BtnMarcas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnMarcasActionPerformed(evt);
+            }
+        });
 
         BTNCrud.setBackground(new java.awt.Color(0, 0, 0));
         BTNCrud.setForeground(new java.awt.Color(255, 255, 255));
@@ -125,6 +130,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
         MConsultas.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnConsultasActionPerformed
+
+    private void BtnMarcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMarcasActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        Marcas VMarcas = new Marcas();
+        
+        VMarcas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtnMarcasActionPerformed
 
     /**
      * @param args the command line arguments

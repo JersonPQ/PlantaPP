@@ -4,6 +4,12 @@
  */
 package planta;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+import static planta.PlantaFunciones.consultaTardiasPorPeriodoTiempo;
+import static planta.PlantaFunciones.consultaEmpleadosDeBajaPorPeriodo;
+
 /**
  *
  * @author XPC
@@ -59,6 +65,11 @@ public class MenúConsultas extends javax.swing.JFrame {
         BtnConsulta3.setBackground(new java.awt.Color(0, 0, 0));
         BtnConsulta3.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta3.setText("<html>Empleados sin marca de salida por periodo de tiempo</html>");
+        BtnConsulta3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnConsulta3ActionPerformed(evt);
+            }
+        });
 
         BtnConsulta1.setBackground(new java.awt.Color(0, 0, 0));
         BtnConsulta1.setForeground(new java.awt.Color(255, 255, 255));
@@ -89,6 +100,11 @@ public class MenúConsultas extends javax.swing.JFrame {
         BtnConsulta5.setBackground(new java.awt.Color(0, 0, 0));
         BtnConsulta5.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta5.setText("<html>Información general de un empleado</html>");
+        BtnConsulta5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnConsulta5ActionPerformed(evt);
+            }
+        });
 
         BtnConsulta6.setBackground(new java.awt.Color(0, 0, 0));
         BtnConsulta6.setForeground(new java.awt.Color(255, 255, 255));
@@ -97,10 +113,20 @@ public class MenúConsultas extends javax.swing.JFrame {
         BtnConsulta7.setBackground(new java.awt.Color(0, 0, 0));
         BtnConsulta7.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta7.setText("<html>Empleados a cargo de un supervisor</html>");
+        BtnConsulta7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnConsulta7ActionPerformed(evt);
+            }
+        });
 
         BtnConsulta8.setBackground(new java.awt.Color(0, 0, 0));
         BtnConsulta8.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta8.setText("<html>Empleados dados de baja en un periodo de tiempo</html>");
+        BtnConsulta8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnConsulta8ActionPerformed(evt);
+            }
+        });
 
         TxtArea.setColumns(20);
         TxtArea.setRows(5);
@@ -235,6 +261,36 @@ public class MenúConsultas extends javax.swing.JFrame {
 
     private void BtnConsulta2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsulta2ActionPerformed
         // TODO add your handling code here:
+        if (TxtFechaI.getText().equals("") || TxtFechaF.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Por favor colocar un a fecha de inicio y una final", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Pattern pattern = Pattern.compile("^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$");
+        Matcher mat = pattern.matcher(TxtFechaI.getText());
+        if(!mat.matches()){
+        JOptionPane.showMessageDialog(this, 
+                    "LA FECHA INGRESADA DEBE SER VÁLIDA Y CUMPLIR CON EL FORMATO YYYY-MM-DD", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        mat = pattern.matcher(TxtFechaF.getText());
+        if(!mat.matches()){
+        JOptionPane.showMessageDialog(this, 
+                "LA FECHA INGRESADA DEBE SER VÁLIDA Y CUMPLIR CON EL FORMATO YYYY-MM-DD", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(PlantaFunciones.FechaCSentido(TxtFechaI.getText(), TxtFechaF.getText()) == false){
+        JOptionPane.showMessageDialog(this, 
+                "LA FECHA DE INGRESO DEBE SER ANTERIOR A LA FECHA DE SALIDA", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+        }
+
+        String salida = consultaTardiasPorPeriodoTiempo(TxtFechaI.getText(), TxtFechaF.getText());
+        TxtArea.setText(salida);
+        
     }//GEN-LAST:event_BtnConsulta2ActionPerformed
 
     private void BtnConsulta4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsulta4ActionPerformed
@@ -249,6 +305,111 @@ public class MenúConsultas extends javax.swing.JFrame {
         MPrincipal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnVolverActionPerformed
+
+    private void BtnConsulta5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsulta5ActionPerformed
+        // TODO add your handling code here:
+        String StrIdEmpleado = TxtIdEmpleado.getText();
+        if(PlantaFunciones.isNumeric(StrIdEmpleado) == false){
+            JOptionPane.showMessageDialog(this, 
+                    "SOLO DEBE INGRESAR NUMEROS EN EL APARTADO DE IDEMPLEADO", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int IdEmpleado = Integer.parseInt(StrIdEmpleado);
+        if(PlantaFunciones.VerificarIdEmpleadoEmpleados(IdEmpleado) == false){
+            JOptionPane.showMessageDialog(this, 
+                    "NO EXISTE UN EMPLEADO CON EL IDEMPLEADO INGRESADO", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String Final = PlantaFunciones.Consulta5(IdEmpleado);
+        TxtArea.setText(Final);
+        
+    }//GEN-LAST:event_BtnConsulta5ActionPerformed
+
+    private void BtnConsulta3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsulta3ActionPerformed
+        // TODO add your handling code here:
+        String strFechaI = TxtFechaI.getText();
+        Pattern pattern = Pattern.compile("^(19|20)(((([02468][048])|([13579][26]))-02-29)|(\\d{2})-((02-((0[1-9])|1\\d|2[0-8]))|((((0[13456789])|1[012]))-((0[1-9])|((1|2)\\d)|30))|(((0[13578])|(1[02]))-31)))[Tt](([0-1]\\d)|(2[0-3]))(:[0-5]\\d){2}$");
+        Matcher mat = pattern.matcher(strFechaI);
+        if(!mat.matches()){
+        JOptionPane.showMessageDialog(this, 
+                    "LA FECHA INGRESADA DEBE SER VÁLIDA Y CUMPLIR CON EL FORMATO YYYY-MM-DDTHH:MM:SS", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String NFechaI = strFechaI.substring(0,10) + " "  + strFechaI.substring(11);
+        
+        String strFechaF = TxtFechaF.getText();
+        
+        mat = pattern.matcher(strFechaF);
+        if(!mat.matches()){
+        JOptionPane.showMessageDialog(this, 
+              "LA FECHA INGRESADA DEBE SER VÁLIDA Y CUMPLIR CON EL FORMATO YYYY-MM-DDTHH:MM:SS", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String NFechaF = strFechaF.substring(0,10) + " "  + strFechaF.substring(11);
+
+        String Final = PlantaFunciones.Consulta3(NFechaI, NFechaF);
+        TxtArea.setText(Final);
+    }//GEN-LAST:event_BtnConsulta3ActionPerformed
+
+    private void BtnConsulta7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsulta7ActionPerformed
+        // TODO add your handling code here:
+        String StrIdEmpleado = TxtIdEmpleado.getText();
+        if(PlantaFunciones.isNumeric(StrIdEmpleado) == false){
+            JOptionPane.showMessageDialog(this, 
+                    "SOLO DEBE INGRESAR NUMEROS EN EL APARTADO DE IDEMPLEADO", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int IdEmpleado = Integer.parseInt(StrIdEmpleado);
+        if(PlantaFunciones.VerificarIdEmpleadoEmpleados(IdEmpleado) == false){
+            JOptionPane.showMessageDialog(this, 
+                    "NO EXISTE UN EMPLEADO CON EL IDEMPLEADO INGRESADO", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String Final = PlantaFunciones.Consulta7(IdEmpleado);
+        TxtArea.setText(Final + "");
+        
+    }//GEN-LAST:event_BtnConsulta7ActionPerformed
+
+    private void BtnConsulta8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsulta8ActionPerformed
+        // TODO add your handling code here:
+        if (TxtFechaI.getText().equals("") || TxtFechaF.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Por favor colocar un a fecha de inicio y una final", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Pattern pattern = Pattern.compile("^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$");
+        Matcher mat = pattern.matcher(TxtFechaI.getText());
+        if(!mat.matches()){
+        JOptionPane.showMessageDialog(this, 
+                    "LA FECHA INGRESADA DEBE SER VÁLIDA Y CUMPLIR CON EL FORMATO YYYY-MM-DD", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        mat = pattern.matcher(TxtFechaF.getText());
+        if(!mat.matches()){
+        JOptionPane.showMessageDialog(this, 
+                "LA FECHA INGRESADA DEBE SER VÁLIDA Y CUMPLIR CON EL FORMATO YYYY-MM-DD", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(PlantaFunciones.FechaCSentido(TxtFechaI.getText(), TxtFechaF.getText()) == false){
+        JOptionPane.showMessageDialog(this, 
+                "LA FECHA DE INGRESO DEBE SER ANTERIOR A LA FECHA DE SALIDA", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+        }
+
+        String salida = consultaEmpleadosDeBajaPorPeriodo(TxtFechaI.getText(), TxtFechaF.getText());
+
+        TxtArea.setText(salida); 
+    }//GEN-LAST:event_BtnConsulta8ActionPerformed
 
     /**
      * @param args the command line arguments
