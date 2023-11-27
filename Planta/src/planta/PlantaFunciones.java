@@ -1215,6 +1215,33 @@ public class PlantaFunciones {
         }
     }
     
+    public static String consultaInfoEmpleadosPorDepartamento(int idDepartamento){
+        Connection con = getConnection();
+        ResultSet rs;
+        String Salida = "";
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call infoEmpleadosPorDepartamento(?)}");
+            stmt.setInt(1, idDepartamento);
+            
+            rs = stmt.executeQuery();
+            
+            Salida += "Id \t Nombre \t\t Apellidos \t\t Fecha ingreso \t Salario Bruto, \t Salario H \t Planta \t Supervisor\n";
+            
+            while (rs.next()) {                
+                Salida += rs.getInt(1) + "\t" + rs.getString(2) + "\t\t" + rs.getString(3) + "\t\t" +
+                        rs.getDate(4) + "\t" + rs.getFloat(5) + "\t" + rs.getString(6) + "\t" + rs.getString(7) + "\t" + rs.getString(8) + "\n";
+            }
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al consultar empleados de baja";
+        }
+    }
+    
     public static void main(String[] args) {
         System.out.println(ObtenerSBruto(1));
         System.out.println(ObtenerSHora(1));

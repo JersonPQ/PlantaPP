@@ -9,18 +9,26 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import static planta.PlantaFunciones.consultaTardiasPorPeriodoTiempo;
 import static planta.PlantaFunciones.consultaEmpleadosDeBajaPorPeriodo;
+import static planta.PlantaFunciones.getNombresDepartamentos;
+import static planta.PlantaFunciones.consultaInfoEmpleadosPorDepartamento;
+
+
 
 /**
  *
  * @author XPC
  */
 public class MenúConsultas extends javax.swing.JFrame {
-
+   
+    private String[] opcionesConsulta;
+    
     /**
      * Creates new form MenúConsultas
      */
     public MenúConsultas() {
         initComponents();
+        
+        actualizarCombosBox();
     }
 
     /**
@@ -51,6 +59,8 @@ public class MenúConsultas extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         TxtFechaF = new javax.swing.JTextField();
         BtnVolver = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        comboBoxDep = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,6 +119,11 @@ public class MenúConsultas extends javax.swing.JFrame {
         BtnConsulta6.setBackground(new java.awt.Color(0, 0, 0));
         BtnConsulta6.setForeground(new java.awt.Color(255, 255, 255));
         BtnConsulta6.setText("<html>Información general de empleados por departamento</html>");
+        BtnConsulta6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnConsulta6ActionPerformed(evt);
+            }
+        });
 
         BtnConsulta7.setBackground(new java.awt.Color(0, 0, 0));
         BtnConsulta7.setForeground(new java.awt.Color(255, 255, 255));
@@ -150,6 +165,9 @@ public class MenúConsultas extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Departamento");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -180,7 +198,8 @@ public class MenúConsultas extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(BtnConsulta7, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel5))))
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel2))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BtnConsulta8, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,7 +216,8 @@ public class MenúConsultas extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(TxtFechaF, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                                     .addComponent(TxtFechaI)
-                                    .addComponent(TxtIdEmpleado))))
+                                    .addComponent(TxtIdEmpleado)
+                                    .addComponent(comboBoxDep, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -223,7 +243,11 @@ public class MenúConsultas extends javax.swing.JFrame {
                             .addComponent(BtnConsulta7)
                             .addComponent(BtnConsulta8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(2, 2, 2)))
-                .addGap(54, 54, 54)
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(comboBoxDep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(TxtIdEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -411,6 +435,25 @@ public class MenúConsultas extends javax.swing.JFrame {
         TxtArea.setText(salida); 
     }//GEN-LAST:event_BtnConsulta8ActionPerformed
 
+    private void BtnConsulta6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsulta6ActionPerformed
+        int idSeleccionado = Integer.parseInt(opcionesConsulta[0].split(",")[comboBoxDep.getSelectedIndex()]);
+        String salida = consultaInfoEmpleadosPorDepartamento(idSeleccionado);
+        TxtArea.setText(salida);
+    }//GEN-LAST:event_BtnConsulta6ActionPerformed
+
+    private void actualizarCombosBox(){
+        comboBoxDep.removeAllItems();
+        try {
+            opcionesConsulta = getNombresDepartamentos();
+            String[] opciones = opcionesConsulta[1].split(",");
+            for (int i = 0; i < opciones.length; i++) {
+                comboBoxDep.addItem(opciones[i]);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -460,7 +503,9 @@ public class MenúConsultas extends javax.swing.JFrame {
     private javax.swing.JTextField TxtFechaF;
     private javax.swing.JTextField TxtFechaI;
     private javax.swing.JTextField TxtIdEmpleado;
+    private javax.swing.JComboBox<String> comboBoxDep;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
