@@ -16,6 +16,10 @@ public class CalculoPlanilla extends javax.swing.JFrame {
 
     private String[] opcionesConsultaCalendario;
     private String[] opcionesConsultaFechasDPago;
+    
+    private int idCalendario;
+    private String fechaInicialDPagoSeleccionada;
+    private String fechaFinalDPagoSeleccionada;
     /**
      * Creates new form Marcas
      */
@@ -105,6 +109,11 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         BTNAprobarPlanilla.setBackground(new java.awt.Color(0, 0, 0));
         BTNAprobarPlanilla.setForeground(new java.awt.Color(255, 255, 255));
         BTNAprobarPlanilla.setText("APROBAR PLANILLA");
+        BTNAprobarPlanilla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNAprobarPlanillaActionPerformed(evt);
+            }
+        });
 
         BTNAprobarPlanilla1.setBackground(new java.awt.Color(0, 0, 0));
         BTNAprobarPlanilla1.setForeground(new java.awt.Color(255, 255, 255));
@@ -199,7 +208,6 @@ public class CalculoPlanilla extends javax.swing.JFrame {
 
     private void BTNConsultarPlanillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNConsultarPlanillaActionPerformed
         // TODO add your handling code here:
-        // TODO add your handling code here:
         int idSeleccionado = Integer.parseInt(opcionesConsultaCalendario[0].split(",")[comboBoxCalendario.getSelectedIndex()]);
         String fechaInicial;
         try {
@@ -213,11 +221,31 @@ public class CalculoPlanilla extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Para acceder a esta función primero debe aproba o rechazar las revisiones de horas extra pendientes", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        System.out.println(fechaInicial);
-        System.out.println(fechaFinal);
-        System.out.println("funciona");
+        idCalendario = idSeleccionado;
+        fechaInicialDPagoSeleccionada = fechaInicial;
+        fechaFinalDPagoSeleccionada = fechaFinal;
+        
+        // consultar planilla
+        String[] lineasSalida = PlantaFunciones.calcularPlanilla(idCalendario, fechaInicial, fechaFinal);
+        
+        String[] elementosLinea;
+        for (int i = 1; i < lineasSalida.length; i++) {
+            elementosLinea = lineasSalida[i].split("\t");
+            if (PlantaFunciones.verificarIdEmpleadoEnPlanilla(Integer.parseInt(elementosLinea[0]), fechaFinalDPagoSeleccionada)) {
+                System.out.println("Funca");
+            } else {
+                System.out.println("No funca");
+            }
+        }
         // INSERTAR PLANILLA
     }//GEN-LAST:event_BTNConsultarPlanillaActionPerformed
+
+    private void BTNAprobarPlanillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNAprobarPlanillaActionPerformed
+        // TODO add your handling code here:
+        idCalendario = -1;
+        fechaInicialDPagoSeleccionada = "";
+        fechaFinalDPagoSeleccionada = "";
+    }//GEN-LAST:event_BTNAprobarPlanillaActionPerformed
 
     private void actualizarTextArea(){
         // verificar que el text field de supervisor tenga un número

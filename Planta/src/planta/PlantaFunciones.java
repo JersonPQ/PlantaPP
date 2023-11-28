@@ -1699,6 +1699,62 @@ public class PlantaFunciones {
         }
     }
     
+    public static String[] calcularPlanilla(int idCalendario, String fechaInicial, String fechaFinal){
+        Connection con = getConnection();
+        ResultSet rs;
+        String Salida = "";
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{Call CalcularPlanilla(?, ?, ?)}");
+            stmt.setInt(1, idCalendario);
+            stmt.setString(2, fechaInicial);
+            stmt.setString(3, fechaFinal);
+            
+            rs = stmt.executeQuery();
+            
+            Salida += "IdEmpleado \t SalarioBruto \t SalarioNeto \n";
+            while (rs.next()) {                
+                Salida += rs.getInt(1) + "\t" + rs.getFloat(2) + "\t" + rs.getFloat(3) + "\n";
+            }
+            
+            con.close();
+            stmt.close();
+            String[] resultadoFinal= Salida.split("\n");
+            return resultadoFinal;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+    
+    public static boolean verificarIdEmpleadoEnPlanilla(int idEmpleado, String fechaPago){
+        Connection con = getConnection();
+        ResultSet rs;
+        Random rnd = new Random();
+        try {
+            CallableStatement stmt = con.prepareCall("{call VerificarSueldoPFecha(?)}");
+            stmt.setString(1, fechaPago);
+
+            rs = stmt.executeQuery();
+
+            String resultado = "";
+
+            while (rs.next()) {
+                if (rs.getInt(1) == idEmpleado) {
+                    return false;
+                }
+            }
+
+            con.close();
+            stmt.close();
+
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
     public static void main(String[] args) throws ParseException {
         String Fecha = generarFechas(2023,11,22,2023,11,27, "2023");
         System.out.println("Marca Entrada: " + ObtenerEntradaM(Fecha, 1));
