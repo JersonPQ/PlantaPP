@@ -33,6 +33,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         BtnMarcas = new javax.swing.JButton();
         BTNCrud = new javax.swing.JButton();
         BTNSimuladorM = new javax.swing.JButton();
+        BTNRevisionExtras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +83,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        BTNRevisionExtras.setBackground(new java.awt.Color(0, 0, 0));
+        BTNRevisionExtras.setForeground(new java.awt.Color(255, 255, 255));
+        BTNRevisionExtras.setText("REVISIÓN DE EXTRAS");
+        BTNRevisionExtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNRevisionExtrasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -89,6 +99,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(74, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BTNRevisionExtras, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTNSimuladorM, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(BtnCPlanillas, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -113,7 +124,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addComponent(BTNCrud, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(BTNSimuladorM, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(BTNRevisionExtras, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -124,7 +137,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -156,7 +171,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void BTNSimuladorMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSimuladorMActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        SimuladorMarcas SMarcas = new SimuladorMarcas();
+        
+        SMarcas.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BTNSimuladorMActionPerformed
+
+    private void BTNRevisionExtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNRevisionExtrasActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        RevisionHExtra RHExtra = new RevisionHExtra();
+        
+        RHExtra.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BTNRevisionExtrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,6 +224,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNCrud;
+    private javax.swing.JButton BTNRevisionExtras;
     private javax.swing.JButton BTNSimuladorM;
     private javax.swing.JButton BtnCPlanillas;
     private javax.swing.JButton BtnConsultas;

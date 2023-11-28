@@ -34,6 +34,7 @@ public class MenuCrud extends javax.swing.JFrame {
         BTNEmpleados = new javax.swing.JButton();
         BTNTipoEmpleado = new javax.swing.JButton();
         BtnVolver = new javax.swing.JButton();
+        BTNDiasTrabajados = new javax.swing.JButton();
 
         BTNVolver.setBackground(new java.awt.Color(0, 0, 0));
         BTNVolver.setForeground(new java.awt.Color(255, 255, 255));
@@ -102,18 +103,28 @@ public class MenuCrud extends javax.swing.JFrame {
             }
         });
 
+        BTNDiasTrabajados.setBackground(new java.awt.Color(0, 0, 0));
+        BTNDiasTrabajados.setForeground(new java.awt.Color(255, 255, 255));
+        BTNDiasTrabajados.setText("Dias Trabajados");
+        BTNDiasTrabajados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNDiasTrabajadosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(144, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BTNTipoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTNEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTNDepartamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTNDFeriados, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTNCalendariosCRUD, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BTNTipoEmpleado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTNEmpleados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTNDepartamentos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTNDFeriados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTNCalendariosCRUD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTNDiasTrabajados, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(BtnVolver)
                 .addGap(20, 20, 20))
@@ -131,7 +142,9 @@ public class MenuCrud extends javax.swing.JFrame {
                 .addComponent(BTNEmpleados, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BTNTipoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(BTNDiasTrabajados, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,7 +159,7 @@ public class MenuCrud extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -214,6 +227,15 @@ public class MenuCrud extends javax.swing.JFrame {
         this.dispose(); 
     }//GEN-LAST:event_BTNTipoEmpleadoActionPerformed
 
+    private void BTNDiasTrabajadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNDiasTrabajadosActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+
+        DiasTrabajadosCRUD DiasTrabCRUD = new DiasTrabajadosCRUD();
+        DiasTrabCRUD.setVisible(true);
+        this.dispose(); 
+    }//GEN-LAST:event_BTNDiasTrabajadosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -253,6 +275,7 @@ public class MenuCrud extends javax.swing.JFrame {
     private javax.swing.JButton BTNCalendariosCRUD;
     private javax.swing.JButton BTNDFeriados;
     private javax.swing.JButton BTNDepartamentos;
+    private javax.swing.JButton BTNDiasTrabajados;
     private javax.swing.JButton BTNEmpleados;
     private javax.swing.JButton BTNTipoEmpleado;
     private javax.swing.JButton BTNVolver;

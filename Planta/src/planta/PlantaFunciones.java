@@ -1428,7 +1428,6 @@ public class PlantaFunciones {
             stmt.setInt(1, IdEmpleado);
             stmt.setString(2, Entrada);
             stmt.setString(3, Salida);
-            System.out.println("Bandera 1");
             rs = stmt.executeQuery();
             
             // while para imprimir todos los datos por tupla de el select
@@ -1574,6 +1573,70 @@ public class PlantaFunciones {
             return false;
         }
     }
+    
+    public static String[] TraerInfoHorasExtra(int idSupervisor){
+        Connection con = getConnection();
+        Statement st;
+        ResultSet rs;
+        try {
+            CallableStatement stmt = con.prepareCall("{call TraerInfoHorasExtra(?)}");
+            stmt.setInt(1, idSupervisor);
+
+            rs = stmt.executeQuery();
+            
+            // while para imprimir todos los datos por tupla de el select
+            String idsHorasExtra = "";
+            String resultado = "";
+            String[] resultadoFinal;
+            while (rs.next()) {      
+                idsHorasExtra += rs.getInt(1) + ",";
+                resultado += rs.getInt(2) + "\t" + rs.getString(3) + rs.getDate(4) + "\t" + rs.getInt(5) + ",";
+            }
+            
+            resultadoFinal = new String[]{idsHorasExtra, resultado};
+            
+            con.close();
+            return resultadoFinal;
+        } catch (Exception e) {
+            System.out.println("Error");
+            return null;
+        }
+    }
+    
+    public static void cambiarRevisionDHoraExtra(int idHoraExtra, String verificado){
+        Connection con = getConnection();
+        Statement st;
+        ResultSet rs;
+        try {
+            CallableStatement stmt = con.prepareCall("{call EvaluarExtraEsp(?, ?)}");
+            stmt.setInt(1, idHoraExtra);
+            stmt.setString(2, verificado);
+
+            rs = stmt.executeQuery();
+            
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+    }
+    
+    public static void cambiarRevisionDHoraExtraTodos(int idSupervisor, String verificado){
+        Connection con = getConnection();
+        Statement st;
+        ResultSet rs;
+        try {
+            CallableStatement stmt = con.prepareCall("{call EvaluarExtraMasa(?, ?)}");
+            stmt.setInt(1, idSupervisor);
+            stmt.setString(2, verificado);
+
+            rs = stmt.executeQuery();
+            
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+    }
+    
     public static void main(String[] args) throws ParseException {
         String Fecha = generarFechas(2023,11,22,2023,11,27, "2023");
         System.out.println("Marca Entrada: " + ObtenerEntradaM(Fecha, 1));

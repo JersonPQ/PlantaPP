@@ -44,7 +44,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
+          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -61,12 +61,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="144" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="BTNTipoEmpleado" min="-2" pref="149" max="-2" attributes="0"/>
-                      <Component id="BTNEmpleados" min="-2" pref="149" max="-2" attributes="0"/>
-                      <Component id="BTNDepartamentos" min="-2" pref="149" max="-2" attributes="0"/>
-                      <Component id="BTNDFeriados" min="-2" pref="149" max="-2" attributes="0"/>
-                      <Component id="BTNCalendariosCRUD" min="-2" pref="149" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="BTNTipoEmpleado" alignment="1" min="-2" pref="149" max="-2" attributes="0"/>
+                      <Component id="BTNEmpleados" alignment="1" min="-2" pref="149" max="-2" attributes="0"/>
+                      <Component id="BTNDepartamentos" alignment="1" min="-2" pref="149" max="-2" attributes="0"/>
+                      <Component id="BTNDFeriados" alignment="1" min="-2" pref="149" max="-2" attributes="0"/>
+                      <Component id="BTNCalendariosCRUD" alignment="1" min="-2" pref="149" max="-2" attributes="0"/>
+                      <Component id="BTNDiasTrabajados" alignment="1" min="-2" pref="149" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="BtnVolver" min="-2" max="-2" attributes="0"/>
@@ -87,7 +88,9 @@
                   <Component id="BTNEmpleados" min="-2" pref="91" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="BTNTipoEmpleado" min="-2" pref="91" max="-2" attributes="0"/>
-                  <EmptySpace pref="36" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="BTNDiasTrabajados" min="-2" pref="91" max="-2" attributes="0"/>
+                  <EmptySpace pref="14" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -180,6 +183,20 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnVolverActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="BTNDiasTrabajados">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Dias Trabajados"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTNDiasTrabajadosActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
