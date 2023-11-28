@@ -8,8 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Random;
 import static planta.MySQLConnection.getConnection;
-
+import java.util.concurrent.ThreadLocalRandom; 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -1242,8 +1248,337 @@ public class PlantaFunciones {
         }
     }
     
-    public static void main(String[] args) {
-        System.out.println(ObtenerSBruto(1));
-        System.out.println(ObtenerSHora(1));
+    
+    
+    public static String generarFechas(int AneoI, int MesI, int DiaI, int AneoF, int MesF, int DiaF,  String Aneo){
+        ThreadLocalRandom r =ThreadLocalRandom.current();
+        Date startDate = new Date(AneoI, MesI, 10);  // Start date (Year, Month, Day)
+        Date endDate = new Date(AneoF, MesF, DiaF);  // End date (Year, Month, Day)
+        Date rnd = new Date(r.nextLong(startDate.getTime(), endDate.getTime()));
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(rnd);
+
+        String FechaRandom = Aneo + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+        return FechaRandom;
+    }
+    
+    
+    public static String ObtenerEntradaM(String Fecha, int IdCalendario){
+        Connection con = getConnection();
+        ResultSet rs;
+        String Salida = "";
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{Call TraerHEntrada(?)}");
+            stmt.setInt(1, IdCalendario);
+            
+            rs = stmt.executeQuery();
+            
+            
+            while (rs.next()) {                
+                Salida += rs.getTime(1);
+            }
+            
+            con.close();
+            stmt.close();
+            int numeroRandom = ThreadLocalRandom.current().nextInt(0, 2);
+            if(numeroRandom == 1){
+                int Hora = Integer.parseInt(Salida.substring(0,2));
+                Hora = Hora + 2;
+                Salida = "0" + Hora + Salida.substring(2);
+            }
+            Salida = Fecha + " " + Salida;
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al consultar empleados de baja";
+        }
+    }
+    
+    public static String ObtenerSalidaM(String Fecha, int IdCalendario){
+        Connection con = getConnection();
+        ResultSet rs;
+        String Salida = "";
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{Call TraerHSalida(?)}");
+            stmt.setInt(1, IdCalendario);
+            
+            rs = stmt.executeQuery();
+            
+            
+            while (rs.next()) {                
+                Salida += rs.getTime(1);
+            }
+            
+            con.close();
+            stmt.close();
+            Salida = Fecha + " " + Salida;
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al consultar empleados de baja";
+        }
+    }
+    
+    public static int ObtenerIdCalendario(int IdEmpleado){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{Call IdCalendarioPIdEmpleado(?, ?)}");
+            stmt.setInt(1, IdEmpleado);
+            
+            stmt.registerOutParameter(2, Types.INTEGER);
+            
+            stmt.execute();
+            
+            int Salida = stmt.getInt(2);
+            
+            
+            con.close();
+            stmt.close();
+            return Salida;
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
+    }
+    
+    public static String[] consultaIdEmpleados(int idCalendario){
+        Connection con = getConnection();
+        Statement st;
+        ResultSet rs;
+        try {
+            CallableStatement stmt = con.prepareCall("{call TraerIdEmpleadoPorIdCalendario(?)}");
+            stmt.setInt(1, idCalendario);
+
+            rs = stmt.executeQuery();
+            
+            // while para imprimir todos los datos por tupla de el select
+            String idsEmpleados = "";
+            while (rs.next()) {
+                idsEmpleados += rs.getInt(1) + ",";
+            }
+            
+            // convierte los ids strings en array
+            String[] idsEmpleadosArray = idsEmpleados.split(",");
+            
+            con.close();
+            return idsEmpleadosArray;
+        } catch (Exception e) {
+            System.out.println("Error");
+            return null;
+        }
+    }
+    
+    public static int verificarMarca(String fechaMarca, int idCalendario){
+        Connection con = getConnection();
+        ResultSet rs;
+        String[] idsEmpleados = consultaIdEmpleados(idCalendario);
+        Random rnd = new Random();
+        int randomInt = rnd.nextInt(idsEmpleados.length);
+        try {
+            CallableStatement stmt = con.prepareCall("{call verificarMarca(?, ?)}");
+            int IdEmpleado = Integer.parseInt(idsEmpleados[randomInt]);
+            System.out.println(IdEmpleado);
+            stmt.setInt(1, IdEmpleado);
+            stmt.setString(2, fechaMarca);
+            
+            rs = stmt.executeQuery();
+            
+            String resultado = "";
+            
+            while (rs.next()) {                
+                resultado += rs.getInt(1);
+            }
+            
+            con.close();
+            stmt.close();
+            
+            // retorna true caso de poder añadir la marca
+            if (resultado.equals("")) {
+                return IdEmpleado;
+            } else {
+                return -1;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
+    }
+    
+    public static boolean VerificarCComprobador(ArrayList<String[]> Comprobador, String IdEmpleado, String Fecha){
+        for (int i=0;i<Comprobador.size();i++) {
+            if(Comprobador.get(i)[0].equals(IdEmpleado) && Comprobador.get(i)[1].equals(Fecha)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    
+    public static void InsertarMarcasFinal(int IdEmpleado, String Entrada, String Salida){
+        Connection con = getConnection();
+        Statement st;
+        ResultSet rs;
+        try {
+            CallableStatement stmt = con.prepareCall("{call MarcarGenerador(?, ?, ?)}");
+            stmt.setInt(1, IdEmpleado);
+            stmt.setString(2, Entrada);
+            stmt.setString(3, Salida);
+            System.out.println("Bandera 1");
+            rs = stmt.executeQuery();
+            
+            // while para imprimir todos los datos por tupla de el select
+            
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+    }
+    
+    
+    public static boolean HoraCSentido(String HoraEntrada, String HoraSalida){
+        int AneoIngreso = Integer.parseInt(HoraEntrada.substring(0, 2));
+        int AneoSalida = Integer.parseInt(HoraSalida.substring(0, 2));
+        if(AneoIngreso>AneoSalida){
+            return false;
+        }
+        else if(AneoIngreso<AneoSalida){
+            return true;
+        }
+        int MesIngreso = Integer.parseInt(HoraEntrada.substring(3, 5));
+        int MesSalida = Integer.parseInt(HoraSalida.substring(3, 5));
+        if(MesIngreso>MesSalida){
+            return false;
+        }
+        else if(MesIngreso<MesSalida){
+            return true;
+        }
+        int DiaIngreso = Integer.parseInt(HoraEntrada.substring(6));
+        int DiaSalida = Integer.parseInt(HoraSalida.substring(6));
+        if(DiaIngreso>DiaSalida){
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean verificarDiasTrabajados(int IdCalendario){
+        Connection con = getConnection();
+        ResultSet rs;
+        Random rnd = new Random();
+        try {
+            CallableStatement stmt = con.prepareCall("{call verificarNoExisteDiasTrabajadosPorCalendario(?)}");
+            stmt.setInt(1, IdCalendario);
+            
+            
+            rs = stmt.executeQuery();
+            
+            String resultado = "";
+            
+            while (rs.next()) {                
+                resultado += rs.getInt(1);
+            }
+            
+            con.close();
+            stmt.close();
+            
+            // retorna true caso de poder añadir la marca
+            if (resultado.equals("")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    public static boolean insertarDiasTrabajados(int IdCalendario, int lunes, int martes, int miercoles, int jueves, int viernes, int sabado,
+            int domingo, String HEntrada, String HSalida){
+        Connection con = getConnection();
+        ResultSet rs;
+        Random rnd = new Random();
+        try {
+            CallableStatement stmt = con.prepareCall("{call insertarDiasTrabajadosPorCalendario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+            stmt.setInt(1, IdCalendario);
+            stmt.setInt(2, lunes);
+            stmt.setInt(3, martes);
+            stmt.setInt(4, miercoles);
+            stmt.setInt(5, jueves);
+            stmt.setInt(6, viernes);
+            stmt.setInt(7, sabado);
+            stmt.setInt(8, domingo);
+            stmt.setString(9, HEntrada);
+            stmt.setString(10, HSalida);
+            
+            
+            rs = stmt.executeQuery();
+            
+            con.close();
+            stmt.close();
+            
+            // retorna true caso de poder añadir la marca
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    public static boolean editarDiasTrabajados(int IdCalendario, String HEntrada, String HSalida){
+        Connection con = getConnection();
+        ResultSet rs;
+        Random rnd = new Random();
+        try {
+            CallableStatement stmt = con.prepareCall("{call modificarHoraDiasTrabajadosPorCalendario(?, ?, ?)}");
+            stmt.setInt(1, IdCalendario);
+            stmt.setString(2, HEntrada);
+            stmt.setString(3, HSalida);
+            
+            
+            rs = stmt.executeQuery();
+            
+            con.close();
+            stmt.close();
+            
+            // retorna true caso de poder añadir la marca
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    public static boolean eliminarDiasTrabajados(int IdCalendario){
+        Connection con = getConnection();
+        ResultSet rs;
+        Random rnd = new Random();
+        try {
+            CallableStatement stmt = con.prepareCall("{call eliminarHoraDiasTrabajadosPorCalendario(?)}");
+            stmt.setInt(1, IdCalendario);
+            
+            
+            rs = stmt.executeQuery();
+            
+            con.close();
+            stmt.close();
+            
+            // retorna true caso de poder añadir la marca
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    public static void main(String[] args) throws ParseException {
+        String Fecha = generarFechas(2023,11,22,2023,11,27, "2023");
+        System.out.println("Marca Entrada: " + ObtenerEntradaM(Fecha, 1));
+        System.out.println("Marca Salida: " + ObtenerSalidaM(Fecha, 1));
+        System.out.println(ObtenerIdCalendario(1));
+        //System.out.println(ThreadLocalRandom.current().nextInt(0, 2));
     }
 }
