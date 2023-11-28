@@ -312,10 +312,11 @@ public class RevisionHExtra extends javax.swing.JFrame {
         
         actualizarCombosBox();
         
-        String strTextArea = "IdEmpleado \t Nombre \t Fecha \t Horas Extra \t IdSupervisor \n";
-        String[] opciones = opcionesConsulta[1].split(",");
-        for (int i = 0; i < opciones.length; i++) {
-            strTextArea += opciones[i] + "\n";
+        String strTextArea = "IdTupla \t IdEmpleado \t Nombre \t Fecha \t Horas Extra \n";
+        String[] opcionesIds = opcionesConsulta[0].split(",");
+        String[] opcionesInfo = opcionesConsulta[1].split(",");
+        for (int i = 0; i < opcionesInfo.length; i++) {
+            strTextArea += opcionesIds[i] + "\t" + opcionesInfo[i] + "\n";
         }
         
         txtAreaConsulta.setText(strTextArea);
@@ -324,7 +325,7 @@ public class RevisionHExtra extends javax.swing.JFrame {
     private void actualizarCombosBox(){
         comboConsultaExtras.removeAllItems();
         try {
-            String[] opciones = opcionesConsulta[1].split(",");
+            String[] opciones = opcionesConsulta[0].split(",");
             for (int i = 0; i < opciones.length; i++) {
                 
                 comboConsultaExtras.addItem(opciones[i]);
