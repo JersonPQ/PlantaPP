@@ -227,6 +227,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="CONSULTAR PLANILLA"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTNConsultarPlanillaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="BTNAprobarPlanilla">
           <Properties>

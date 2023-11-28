@@ -96,6 +96,11 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         BTNConsultarPlanilla.setBackground(new java.awt.Color(0, 0, 0));
         BTNConsultarPlanilla.setForeground(new java.awt.Color(255, 255, 255));
         BTNConsultarPlanilla.setText("CONSULTAR PLANILLA");
+        BTNConsultarPlanilla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNConsultarPlanillaActionPerformed(evt);
+            }
+        });
 
         BTNAprobarPlanilla.setBackground(new java.awt.Color(0, 0, 0));
         BTNAprobarPlanilla.setForeground(new java.awt.Color(255, 255, 255));
@@ -191,6 +196,28 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         MPrincipal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BTNVolverActionPerformed
+
+    private void BTNConsultarPlanillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNConsultarPlanillaActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        int idSeleccionado = Integer.parseInt(opcionesConsultaCalendario[0].split(",")[comboBoxCalendario.getSelectedIndex()]);
+        String fechaInicial;
+        try {
+            fechaInicial = opcionesConsultaFechasDPago[1].split(",")[comboBoxFechasDPago.getSelectedIndex() - 1];
+        } catch (IndexOutOfBoundsException e) {
+            fechaInicial = opcionesConsultaFechasDPago[1].split(",")[opcionesConsultaFechasDPago[1].split(",").length - 1];
+            fechaInicial = "2022" + fechaInicial.substring(4);
+        }
+        String fechaFinal = (String) comboBoxFechasDPago.getSelectedItem();
+        if (!PlantaFunciones.verificarExtrasPendientesPf(idSeleccionado, fechaInicial, fechaFinal)) {
+            JOptionPane.showMessageDialog(this, "Para acceder a esta función primero debe aproba o rechazar las revisiones de horas extra pendientes", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        System.out.println(fechaInicial);
+        System.out.println(fechaFinal);
+        System.out.println("funciona");
+        // INSERTAR PLANILLA
+    }//GEN-LAST:event_BTNConsultarPlanillaActionPerformed
 
     private void actualizarTextArea(){
         // verificar que el text field de supervisor tenga un número

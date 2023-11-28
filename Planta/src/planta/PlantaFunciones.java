@@ -1653,7 +1653,7 @@ public class PlantaFunciones {
             String[] resultadoFinal;
             while (rs.next()) {
                 idsDiasDPago += rs.getInt(1) + ",";
-                resultado += rs.getInt(2) + "-" + rs.getInt(3) + "-" + "2023" + ",";
+                resultado += "2023" + "-" + rs.getInt(3) + "-" + rs.getInt(2) + ",";
             }
 
             resultadoFinal = new String[]{idsDiasDPago, resultado};
@@ -1663,6 +1663,39 @@ public class PlantaFunciones {
         } catch (Exception e) {
             System.out.println("Error");
             return null;
+        }
+    }
+    
+    public static boolean verificarExtrasPendientesPf(int IdCalendario, String fechaInicial, String fechaFinal){
+        Connection con = getConnection();
+        ResultSet rs;
+        Random rnd = new Random();
+        try {
+            CallableStatement stmt = con.prepareCall("{call VerificarExtrasPendientesPF(?, ?, ?)}");
+            stmt.setInt(1, IdCalendario);
+            stmt.setString(2, fechaInicial);
+            stmt.setString(3, fechaFinal);
+
+            rs = stmt.executeQuery();
+
+            String resultado = "";
+
+            while (rs.next()) {
+                resultado += rs.getInt(1);
+            }
+
+            con.close();
+            stmt.close();
+
+            // retorna true caso de poder añadir la marca
+            if (resultado.equals("")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
         }
     }
     
