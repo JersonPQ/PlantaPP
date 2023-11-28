@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 public class RevisionHExtra extends javax.swing.JFrame {
 
     private String[] opcionesConsulta;
-    
+    private boolean banderaHorasExtra = false;
     /**
      * Creates new form Marcas
      */
@@ -161,11 +161,12 @@ public class RevisionHExtra extends javax.swing.JFrame {
                                 .addComponent(BTNAceptarExtra)
                                 .addGap(60, 60, 60)
                                 .addComponent(BTNRechaExtra)
-                                .addGap(137, 137, 137))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(comboConsultaExtras, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(137, 137, 137)))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(comboConsultaExtras, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(206, 206, 206))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,18 +177,16 @@ public class RevisionHExtra extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(BTNVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(13, 13, 13)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtFieldCEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(56, 56, 56)
+                .addGap(62, 62, 62)
                 .addComponent(comboConsultaExtras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BTNRechaExtra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(BTNAceptarExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(BTNConsultarExtras, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(BTNAceptarExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BTNConsultarExtras, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -262,6 +261,9 @@ public class RevisionHExtra extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Id de supervisor incorrecto, no existe como empleado", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (!banderaHorasExtra) {
+            JOptionPane.showMessageDialog(this, "No hay horas extra para aceptar", "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
         
         PlantaFunciones.cambiarRevisionDHoraExtraTodos(idSupervisor, "A");
         
@@ -280,6 +282,9 @@ public class RevisionHExtra extends javax.swing.JFrame {
         if (!PlantaFunciones.VerificarIdEmpleadoEmpleados(idSupervisor)) {
             JOptionPane.showMessageDialog(this, "Id de supervisor incorrecto, no existe como empleado", "Error", JOptionPane.ERROR_MESSAGE);
             return;
+        }
+        if (!banderaHorasExtra) {
+            JOptionPane.showMessageDialog(this, "No hay horas extra para rechazar", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
         PlantaFunciones.cambiarRevisionDHoraExtraTodos(idSupervisor, "R");
         
@@ -310,11 +315,16 @@ public class RevisionHExtra extends javax.swing.JFrame {
         
         opcionesConsulta = PlantaFunciones.TraerInfoHorasExtra(idSupervisor);
         
+        String[] opcionesIds = opcionesConsulta[0].split(",");
+        String[] opcionesInfo = opcionesConsulta[1].split(",");
+        if (opcionesIds[0].equals("")) {
+            banderaHorasExtra = false;
+        } else {
+            banderaHorasExtra = true;
+        }
         actualizarCombosBox();
         
         String strTextArea = "IdTupla \t IdEmpleado \t Nombre \t Fecha \t Horas Extra \n";
-        String[] opcionesIds = opcionesConsulta[0].split(",");
-        String[] opcionesInfo = opcionesConsulta[1].split(",");
         for (int i = 0; i < opcionesInfo.length; i++) {
             strTextArea += opcionesIds[i] + "\t" + opcionesInfo[i] + "\n";
         }
