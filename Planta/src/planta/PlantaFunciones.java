@@ -1732,23 +1732,26 @@ public class PlantaFunciones {
         ResultSet rs;
         Random rnd = new Random();
         try {
-            CallableStatement stmt = con.prepareCall("{call VerificarSueldoPFecha(?)}");
-            stmt.setString(1, fechaPago);
+            CallableStatement stmt = con.prepareCall("{call VerificarSueldoPFecha(?,?)}");
+            stmt.setInt(1, idEmpleado);
+            stmt.setString(2, fechaPago);
 
             rs = stmt.executeQuery();
 
             String resultado = "";
 
             while (rs.next()) {
-                if (rs.getInt(1) == idEmpleado) {
-                    return false;
-                }
+                resultado += rs.getInt(1);
             }
 
             con.close();
             stmt.close();
 
-            return true;
+            if (resultado.equals("")) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             System.out.println(e);
             return false;
