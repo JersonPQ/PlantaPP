@@ -1637,6 +1637,35 @@ public class PlantaFunciones {
         }
     }
     
+    public static String[] TraerDiasDPago(int idCalendario){
+        Connection con = getConnection();
+        Statement st;
+        ResultSet rs;
+        try {
+            CallableStatement stmt = con.prepareCall("{call TraerDiasDPago(?)}");
+            stmt.setInt(1, idCalendario);
+
+            rs = stmt.executeQuery();
+
+            // while para imprimir todos los datos por tupla de el select
+            String idsDiasDPago = "";
+            String resultado = "";
+            String[] resultadoFinal;
+            while (rs.next()) {
+                idsDiasDPago += rs.getInt(1) + ",";
+                resultado += rs.getInt(2) + "\t" + rs.getInt(3) + "\t" + ",";
+            }
+
+            resultadoFinal = new String[]{idsDiasDPago, resultado};
+
+            con.close();
+            return resultadoFinal;
+        } catch (Exception e) {
+            System.out.println("Error");
+            return null;
+        }
+    }
+    
     public static void main(String[] args) throws ParseException {
         String Fecha = generarFechas(2023,11,22,2023,11,27, "2023");
         System.out.println("Marca Entrada: " + ObtenerEntradaM(Fecha, 1));
