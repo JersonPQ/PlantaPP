@@ -762,6 +762,28 @@ BEGIN
 END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE TraerInfoHorasExtra(IN IdSupervisorN int)
+BEGIN
+    Select Id, HorasExtra.IdEmpleado, Nombre, Fecha, CHExtras, HorasExtra.IdSupervisor From HorasExtra INNER JOIN Empleados ON Empleados.IdEmpleado = HorasExtra.IdEmpleado Where HorasExtra.IdSupervisor =  IdSupervisorN and Verificado = 'P';
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE EvaluarExtraEsp(IN IdTupla int, IN Estado varchar(1))
+BEGIN
+    Update HorasExtra set Verificado = Estado Where HorasExtra.Id = IdTupla;
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE EvaluarExtraMasa(IN IdSupervisorN int, IN Estado varchar(1))
+BEGIN
+    Update HorasExtra set Verificado = Estado Where HorasExtra.IdSupervisor = IdSupervisorN and HorasExtra.Verificado = 'P';
+END //
+DELIMITER ;
+
 
 Call Consulta3('2023-11-26 02:07:42', '2023-11-26 10:45:00');
 
@@ -782,3 +804,8 @@ Insert Into Marcas(IdEmpleado, Entrada) values(2, '2023-11-27 06:00:00');
 
 Update Marcas set Marcas.Salida =  '2023-11-27 17:00:00' Where Marcas.IdEmpleado = 2 and Date(Marcas.Entrada) = '2023-11-27';
 
+Call TraerInfoHorasExtra(10);
+
+Call EvaluarExtraEsp(2, 'A');
+
+Call EvaluarExtraMasa(10, 'R');
