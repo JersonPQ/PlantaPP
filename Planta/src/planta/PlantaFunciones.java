@@ -1653,7 +1653,7 @@ public class PlantaFunciones {
             String[] resultadoFinal;
             while (rs.next()) {
                 idsDiasDPago += rs.getInt(1) + ",";
-                resultado += rs.getInt(2) + "\t" + rs.getInt(3) + "\t" + ",";
+                resultado += rs.getInt(2) + "-" + rs.getInt(3) + "-" + "2023" + ",";
             }
 
             resultadoFinal = new String[]{idsDiasDPago, resultado};

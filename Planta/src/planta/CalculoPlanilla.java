@@ -16,7 +16,6 @@ public class CalculoPlanilla extends javax.swing.JFrame {
 
     private String[] opcionesConsultaCalendario;
     private String[] opcionesConsultaFechasDPago;
-    private boolean banderaHorasExtra = false;
     /**
      * Creates new form Marcas
      */
@@ -25,17 +24,16 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         
         actualizarCombosBoxCalendario();
         
-        comboBoxFechasDPago.addActionListener(new ActionListener() {
+        comboBoxCalendario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 actualizarComboBoxFechasDPago();
             }
                 
         });
-//        comboBoxFechasDPago.addActionListener(new ActionListener() {@Override
-//              public void actionPerformed(ActionEvent e) {// actualizar comboBoxFecha
-//                  actualizarCombosBoxFechaEliminar();}
-//          });}
+
+        
+        actualizarComboBoxFechasDPago();
     }
 
     /**
