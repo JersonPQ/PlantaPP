@@ -1590,7 +1590,7 @@ public class PlantaFunciones {
             String[] resultadoFinal;
             while (rs.next()) {      
                 idsHorasExtra += rs.getInt(1) + ",";
-                resultado += rs.getInt(2) + "\t" + rs.getString(3) + rs.getDate(4) + "\t" + rs.getInt(5) + ",";
+                resultado += rs.getInt(2) + "\t" + rs.getString(3) + "\t" + rs.getDate(4) + "\t" + rs.getInt(5) + ",";
             }
             
             resultadoFinal = new String[]{idsHorasExtra, resultado};

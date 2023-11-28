@@ -156,15 +156,15 @@ public class RevisionHExtra extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(comboConsultaExtras, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(BTNConsultarExtras)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BTNAceptarExtra)
-                                .addGap(48, 48, 48)
+                                .addGap(60, 60, 60)
                                 .addComponent(BTNRechaExtra)
-                                .addGap(85, 85, 85)))))
+                                .addGap(137, 137, 137))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(comboConsultaExtras, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -312,7 +312,7 @@ public class RevisionHExtra extends javax.swing.JFrame {
         
         actualizarCombosBox();
         
-        String strTextArea = "";
+        String strTextArea = "IdEmpleado \t Nombre \t Fecha \t Horas Extra \t IdSupervisor \n";
         String[] opciones = opcionesConsulta[1].split(",");
         for (int i = 0; i < opciones.length; i++) {
             strTextArea += opciones[i] + "\n";
@@ -326,6 +326,7 @@ public class RevisionHExtra extends javax.swing.JFrame {
         try {
             String[] opciones = opcionesConsulta[1].split(",");
             for (int i = 0; i < opciones.length; i++) {
+                
                 comboConsultaExtras.addItem(opciones[i]);
             }
         } catch (Exception e) {
