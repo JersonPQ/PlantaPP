@@ -1807,6 +1807,27 @@ public class PlantaFunciones {
         }
     }
     
+    public static void EliminarDPlanilla(int idEmpleado, String fechaPago){
+        Connection con = getConnection();
+        ResultSet rs;
+        Random rnd = new Random();
+        try {
+            CallableStatement stmt = con.prepareCall("{call EliminarDPlanilla(?, ?)}");
+            stmt.setInt(1, idEmpleado); 
+            stmt.setString(2, fechaPago);
+
+            rs = stmt.executeQuery();
+                
+
+            con.close();
+            stmt.close();
+            
+        } catch (Exception e) {
+            System.out.println(e);
+            
+        }
+    }
+    
     public static void main(String[] args) throws ParseException {
         String Fecha = generarFechas(2023,11,22,2023,11,27, "2023");
         System.out.println("Marca Entrada: " + ObtenerEntradaM(Fecha, 1));

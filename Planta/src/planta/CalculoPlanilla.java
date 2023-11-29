@@ -20,6 +20,8 @@ public class CalculoPlanilla extends javax.swing.JFrame {
     private int idCalendario;
     private String fechaInicialDPagoSeleccionada;
     private String fechaFinalDPagoSeleccionada;
+    
+    private String[] lineasSalida = null;
     /**
      * Creates new form Marcas
      */
@@ -62,7 +64,7 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         comboBoxFechasDPago = new javax.swing.JComboBox<>();
         BTNConsultarPlanilla = new javax.swing.JButton();
         BTNAprobarPlanilla = new javax.swing.JButton();
-        BTNAprobarPlanilla1 = new javax.swing.JButton();
+        BTNRechazarPlanilla = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -115,12 +117,12 @@ public class CalculoPlanilla extends javax.swing.JFrame {
             }
         });
 
-        BTNAprobarPlanilla1.setBackground(new java.awt.Color(0, 0, 0));
-        BTNAprobarPlanilla1.setForeground(new java.awt.Color(255, 255, 255));
-        BTNAprobarPlanilla1.setText("RECHAZAR PLANILLA");
-        BTNAprobarPlanilla1.addActionListener(new java.awt.event.ActionListener() {
+        BTNRechazarPlanilla.setBackground(new java.awt.Color(0, 0, 0));
+        BTNRechazarPlanilla.setForeground(new java.awt.Color(255, 255, 255));
+        BTNRechazarPlanilla.setText("RECHAZAR PLANILLA");
+        BTNRechazarPlanilla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BTNAprobarPlanilla1ActionPerformed(evt);
+                BTNRechazarPlanillaActionPerformed(evt);
             }
         });
 
@@ -156,7 +158,7 @@ public class CalculoPlanilla extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BTNAprobarPlanilla)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BTNAprobarPlanilla1)
+                .addComponent(BTNRechazarPlanilla)
                 .addGap(74, 74, 74))
         );
         jPanel1Layout.setVerticalGroup(
@@ -181,7 +183,7 @@ public class CalculoPlanilla extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTNConsultarPlanilla, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTNAprobarPlanilla, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTNAprobarPlanilla1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BTNRechazarPlanilla, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -232,7 +234,7 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         fechaFinalDPagoSeleccionada = fechaFinal;
         
         // consultar planilla
-        String[] lineasSalida = PlantaFunciones.calcularPlanilla(idCalendario, fechaInicial, fechaFinal);
+        lineasSalida = PlantaFunciones.calcularPlanilla(idCalendario, fechaInicial, fechaFinal);
         
         String[] elementosLinea;
         
@@ -240,7 +242,6 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         for (int i = 1; i < lineasSalida.length; i++) {
             elementosLinea = lineasSalida[i].split("\t");
             if (PlantaFunciones.verificarIdEmpleadoEnPlanilla(Integer.parseInt(elementosLinea[0]), fechaFinalDPagoSeleccionada)) {
-                System.out.println("Funca");
                 int idEmpleadoIns = Integer.parseInt(elementosLinea[0]);
                 String fechaDPago = fechaFinalDPagoSeleccionada;
                 float montoPagadoBruto = Float.parseFloat(elementosLinea[1]);
@@ -260,22 +261,43 @@ public class CalculoPlanilla extends javax.swing.JFrame {
 
     private void BTNAprobarPlanillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNAprobarPlanillaActionPerformed
         // TODO add your handling code here:
+        if (idCalendario == -1 || lineasSalida == null) {
+            JOptionPane.showMessageDialog(this, "Favor consultar planilla", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         idCalendario = -1;
         fechaInicialDPagoSeleccionada = "";
         fechaFinalDPagoSeleccionada = "";
+        txtAreaConsulta.setText("");
         JOptionPane.showMessageDialog(this, "Proceso realizado de manera exitosa", "!!", JOptionPane.INFORMATION_MESSAGE);
         return;
     }//GEN-LAST:event_BTNAprobarPlanillaActionPerformed
 
-    private void BTNAprobarPlanilla1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNAprobarPlanilla1ActionPerformed
+    private void BTNRechazarPlanillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNRechazarPlanillaActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_BTNAprobarPlanilla1ActionPerformed
-
-    private void actualizarTextArea(){
-        // verificar que el text field de supervisor tenga un número
-
-    }
+        try {
+            if (idCalendario == -1 || lineasSalida == null) {
+                JOptionPane.showMessageDialog(this, "Favor consultar planilla", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            String[] elementosLinea;
+            for (int i = 1; i < lineasSalida.length; i++) {
+                elementosLinea = lineasSalida[i].split("\t");
+                int idEmpleadoEli = Integer.parseInt(elementosLinea[0]);
+                String fechaDPago = fechaFinalDPagoSeleccionada;
+                PlantaFunciones.EliminarDPlanilla(idEmpleadoEli, fechaDPago);
+            }
+            
+            idCalendario = -1;
+            fechaInicialDPagoSeleccionada = "";
+            fechaFinalDPagoSeleccionada = "";
+            txtAreaConsulta.setText("");
+            JOptionPane.showMessageDialog(this, "Proceso realizado de manera exitosa", "!!", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_BTNRechazarPlanillaActionPerformed
 
     private void actualizarCombosBoxCalendario(){
         comboBoxCalendario.removeAllItems();
@@ -350,8 +372,8 @@ public class CalculoPlanilla extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNAprobarPlanilla;
-    private javax.swing.JButton BTNAprobarPlanilla1;
     private javax.swing.JButton BTNConsultarPlanilla;
+    private javax.swing.JButton BTNRechazarPlanilla;
     private javax.swing.JButton BTNVolver;
     private javax.swing.JLabel LblMarcas;
     private javax.swing.JComboBox<String> comboBoxCalendario;

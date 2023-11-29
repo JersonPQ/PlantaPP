@@ -101,7 +101,7 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="BTNAprobarPlanilla" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="BTNAprobarPlanilla1" min="-2" max="-2" attributes="0"/>
+                  <Component id="BTNRechazarPlanilla" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -132,7 +132,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="BTNConsultarPlanilla" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
                       <Component id="BTNAprobarPlanilla" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
-                      <Component id="BTNAprobarPlanilla1" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
+                      <Component id="BTNRechazarPlanilla" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -245,7 +245,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTNAprobarPlanillaActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="BTNAprobarPlanilla1">
+        <Component class="javax.swing.JButton" name="BTNRechazarPlanilla">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
@@ -256,7 +256,7 @@
             <Property name="text" type="java.lang.String" value="RECHAZAR PLANILLA"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTNAprobarPlanilla1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTNRechazarPlanillaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
