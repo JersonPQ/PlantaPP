@@ -229,15 +229,26 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         String[] lineasSalida = PlantaFunciones.calcularPlanilla(idCalendario, fechaInicial, fechaFinal);
         
         String[] elementosLinea;
+        
+        String resultadoTextArea = "IdEmpleado \t Fecha Pago \t Salario Bruto \t Salario Neto \t Planta \t Tipo Pago \n";
         for (int i = 1; i < lineasSalida.length; i++) {
             elementosLinea = lineasSalida[i].split("\t");
             if (PlantaFunciones.verificarIdEmpleadoEnPlanilla(Integer.parseInt(elementosLinea[0]), fechaFinalDPagoSeleccionada)) {
                 System.out.println("Funca");
-            } else {
-                System.out.println("No funca");
+                int idEmpleadoIns = Integer.parseInt(elementosLinea[0]);
+                String fechaDPago = fechaFinalDPagoSeleccionada;
+                float montoPagadoBruto = Float.parseFloat(elementosLinea[1]);
+                float montoPagadoNeto = Float.parseFloat(elementosLinea[2]);
+                String planta = "Guayabo";
+                int tipoDPago = PlantaFunciones.consultarTipoDPagoNUMPorCalendario(idCalendario);
+                
+                resultadoTextArea += idEmpleadoIns + "\t" + fechaDPago + "\t" + montoPagadoBruto + "\t" + montoPagadoNeto + "\t" + planta + "\t" + tipoDPago + "\n";
             }
         }
         // INSERTAR PLANILLA
+        
+        // muestra en text area
+        txtAreaConsulta.setText(resultadoTextArea);
     }//GEN-LAST:event_BTNConsultarPlanillaActionPerformed
 
     private void BTNAprobarPlanillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNAprobarPlanillaActionPerformed
