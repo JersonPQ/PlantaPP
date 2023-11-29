@@ -273,6 +273,11 @@ public class CalculoPlanilla extends javax.swing.JFrame {
             return;
         }
         
+        if (lineasSalida.length == 1) {
+            JOptionPane.showMessageDialog(this, "No hay cálculos de planilla por aceptar", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         int tipoDPago = PlantaFunciones.consultarTipoDPagoNUMPorCalendario(idCalendario);
         PlantaFunciones.generarCSV2(fechaFinalDPagoSeleccionada, tipoDPago);
         idCalendario = -1;
@@ -288,6 +293,11 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         try {
             if (idCalendario == -1 || lineasSalida == null) {
                 JOptionPane.showMessageDialog(this, "Favor consultar planilla", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (lineasSalida.length == 1) {
+                JOptionPane.showMessageDialog(this, "No hay cálculos de planilla por rechazar", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
