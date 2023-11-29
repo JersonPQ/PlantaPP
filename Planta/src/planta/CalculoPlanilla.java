@@ -207,6 +207,11 @@ public class CalculoPlanilla extends javax.swing.JFrame {
 
     private void BTNVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNVolverActionPerformed
         // TODO add your handling code here:
+        if (idCalendario == -1) {
+            JOptionPane.showMessageDialog(this, "Favor primero aceptar o rechazar la consulta de planilla rechazada", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         this.setVisible(false);
         MenuPrincipal MPrincipal = new MenuPrincipal();
         MPrincipal.setVisible(true);
