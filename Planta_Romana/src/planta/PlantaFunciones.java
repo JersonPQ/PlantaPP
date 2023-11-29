@@ -1287,7 +1287,7 @@ public class PlantaFunciones {
             if(numeroRandom == 1){
                 int Hora = Integer.parseInt(Salida.substring(0,2));
                 Hora = Hora + 2;
-                Salida = Hora + Salida.substring(2);
+                Salida = "0" + Hora + Salida.substring(2);
             }
             Salida = Fecha + " " + Salida;
             return Salida;
