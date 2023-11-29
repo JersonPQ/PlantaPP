@@ -273,11 +273,21 @@ public class CalculoPlanilla extends javax.swing.JFrame {
             return;
         }
         
-        if (lineasSalida.length == 1) {
+        String empleadosVerificados = "";
+        String[] elementosLineaEmpleados;
+        for (int i = 1; i < lineasSalida.length; i++) {
+            elementosLineaEmpleados = lineasSalida[i].split("\t");
+            if (PlantaFunciones.verificarIdEmpleadoEnPlanilla(Integer.parseInt(elementosLineaEmpleados[0]), fechaFinalDPagoSeleccionada)) {
+                empleadosVerificados = elementosLineaEmpleados[0];
+                break;
+            }
+        }
+        
+        if (!empleadosVerificados.equals("")) {
             JOptionPane.showMessageDialog(this, "No hay cálculos de planilla por aceptar", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+                
         int tipoDPago = PlantaFunciones.consultarTipoDPagoNUMPorCalendario(idCalendario);
         PlantaFunciones.generarCSV2(fechaFinalDPagoSeleccionada, tipoDPago);
         idCalendario = -1;
@@ -296,8 +306,18 @@ public class CalculoPlanilla extends javax.swing.JFrame {
                 return;
             }
             
-            if (lineasSalida.length == 1) {
-                JOptionPane.showMessageDialog(this, "No hay cálculos de planilla por rechazar", "Error", JOptionPane.ERROR_MESSAGE);
+            String empleadosVerificados = "";
+            String[] elementosLineaEmpleados;
+            for (int i = 1; i < lineasSalida.length; i++) {
+                elementosLineaEmpleados = lineasSalida[i].split("\t");
+                if (PlantaFunciones.verificarIdEmpleadoEnPlanilla(Integer.parseInt(elementosLineaEmpleados[0]), fechaFinalDPagoSeleccionada)) {
+                    empleadosVerificados = elementosLineaEmpleados[0];
+                    break;
+                }
+            }
+
+            if (!empleadosVerificados.equals("")) {
+                JOptionPane.showMessageDialog(this, "No hay cálculos de planilla por aceptar", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             
