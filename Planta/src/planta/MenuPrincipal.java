@@ -55,6 +55,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         BtnCPlanillas.setText("CÁLCULO DE PLANILLAS");
         BtnCPlanillas.setMaximumSize(new java.awt.Dimension(77, 28));
         BtnCPlanillas.setMinimumSize(new java.awt.Dimension(77, 28));
+        BtnCPlanillas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCPlanillasActionPerformed(evt);
+            }
+        });
 
         BtnMarcas.setBackground(new java.awt.Color(0, 0, 0));
         BtnMarcas.setForeground(new java.awt.Color(255, 255, 255));
@@ -186,6 +191,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         RHExtra.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BTNRevisionExtrasActionPerformed
+
+    private void BtnCPlanillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCPlanillasActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        CalculoPlanilla CPlanilla = new CalculoPlanilla();
+        CPlanilla.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtnCPlanillasActionPerformed
 
     /**
      * @param args the command line arguments

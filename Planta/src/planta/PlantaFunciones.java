@@ -1758,6 +1758,55 @@ public class PlantaFunciones {
         }
     }
     
+    public static void InsertarPlanilla(int idEmpleado, String fechaPago, float MontoPagadoBruto, float MontoPagadoNeto, String Planta, int TipoDPago){
+        Connection con = getConnection();
+        ResultSet rs;
+        Random rnd = new Random();
+        try {
+            CallableStatement stmt = con.prepareCall("{call InsertarPlanilla(?, ?, ?, ?, ?, ?)}");
+            stmt.setInt(1, idEmpleado); 
+            stmt.setString(2, fechaPago);
+            stmt.setFloat(3, MontoPagadoBruto);
+            stmt.setFloat(4, MontoPagadoNeto);
+            stmt.setString(5, Planta);
+            stmt.setInt(6, TipoDPago); 
+
+            rs = stmt.executeQuery();
+                
+
+            con.close();
+            stmt.close();
+            
+        } catch (Exception e) {
+            System.out.println(e);
+            
+        }
+    }
+    
+    
+    public static int consultarTipoDPagoNUMPorCalendario(int idCalendarioConsulta){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{call consultarTipoDPagoNUMPorCalendario(?)}");
+            ResultSet rs;
+            stmt.setInt(1, idCalendarioConsulta);
+            rs = stmt.executeQuery();
+            
+            int resultado = 0;
+            while (rs.next()) {                
+                resultado  = rs.getInt(1);
+            }
+            
+            con.close();
+            stmt.close();
+            return resultado;
+        } catch (Exception e) {
+            System.out.println(e);
+            return -1;
+        }
+    }
+    
     public static void main(String[] args) throws ParseException {
         String Fecha = generarFechas(2023,11,22,2023,11,27, "2023");
         System.out.println("Marca Entrada: " + ObtenerEntradaM(Fecha, 1));

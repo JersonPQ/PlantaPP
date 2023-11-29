@@ -219,6 +219,7 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         String fechaFinal = (String) comboBoxFechasDPago.getSelectedItem();
         if (!PlantaFunciones.verificarExtrasPendientesPf(idSeleccionado, fechaInicial, fechaFinal)) {
             JOptionPane.showMessageDialog(this, "Para acceder a esta función primero debe aproba o rechazar las revisiones de horas extra pendientes", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
         idCalendario = idSeleccionado;
@@ -243,6 +244,7 @@ public class CalculoPlanilla extends javax.swing.JFrame {
                 int tipoDPago = PlantaFunciones.consultarTipoDPagoNUMPorCalendario(idCalendario);
                 
                 resultadoTextArea += idEmpleadoIns + "\t" + fechaDPago + "\t" + montoPagadoBruto + "\t" + montoPagadoNeto + "\t" + planta + "\t" + tipoDPago + "\n";
+                PlantaFunciones.InsertarPlanilla(idEmpleadoIns, fechaDPago, montoPagadoBruto, montoPagadoNeto, planta, tipoDPago);
             }
         }
         // INSERTAR PLANILLA
