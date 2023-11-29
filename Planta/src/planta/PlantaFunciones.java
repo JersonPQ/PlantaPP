@@ -1828,27 +1828,32 @@ public class PlantaFunciones {
         }
     }
     
-    public static void generarCSV(String FechaDPago, int TipoDPago){
+    
+    
+    
+    public static void generarCSV2(String FechaDPago, int TipoDPago){
         //C:/Guardar/prueba.csv
         Connection con = getConnection();
-        Statement st;
         ResultSet rs;
+        Random rnd = new Random();
         try {
-            st = con.createStatement();
-            String query = "Select IdEmpleado, FechaDPago, MontoPagadoBruto, MontoPagadoNeto, Planta, TipoDPago " +
-                "From Planilla Where TipoDPago = " +
-                  TipoDPago + " and FechaDPago = " + FechaDPago + " INTO OUTFILE " + "'C:/Guardar/" + FechaDPago + "_" + TipoDPago + ".csv'" + " FIELDS TERMINATED BY ',';";
-            rs = st.executeQuery(query);
-            
+            CallableStatement stmt = con.prepareCall("{call GenerarCSV(?, ?)}");
+            stmt.setString(1, FechaDPago); 
+            stmt.setInt(2, TipoDPago);
+
+            rs = stmt.executeQuery();
+                
+
             con.close();
-        } catch (Exception e) {
+            stmt.close();
             
-            System.out.println("Errorvcvx");
+        } catch (Exception e) {
+            System.out.println(e);
+            
         }
-//        SELECT  IdEmpleado, FechaDPago, MontoPagadoBruto, MontoPagadoNeto, Planta, TipoDPago  
-//                FROM Planilla 
-//                        Where IdEmpleado = IdEmpleadoN and FechaDPago = FechaDPagoN INTO OUTFILE Prueba FIELDS TERMINATED BY ',';
     }
+    
+    
     
     public static void main(String[] args) throws ParseException {
         String Fecha = generarFechas(2023,11,22,2023,11,27, "2023");
