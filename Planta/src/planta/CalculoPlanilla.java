@@ -118,6 +118,11 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         BTNAprobarPlanilla1.setBackground(new java.awt.Color(0, 0, 0));
         BTNAprobarPlanilla1.setForeground(new java.awt.Color(255, 255, 255));
         BTNAprobarPlanilla1.setText("RECHAZAR PLANILLA");
+        BTNAprobarPlanilla1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNAprobarPlanilla1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -258,7 +263,14 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         idCalendario = -1;
         fechaInicialDPagoSeleccionada = "";
         fechaFinalDPagoSeleccionada = "";
+        JOptionPane.showMessageDialog(this, "Proceso realizado de manera exitosa", "!!", JOptionPane.INFORMATION_MESSAGE);
+        return;
     }//GEN-LAST:event_BTNAprobarPlanillaActionPerformed
+
+    private void BTNAprobarPlanilla1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNAprobarPlanilla1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_BTNAprobarPlanilla1ActionPerformed
 
     private void actualizarTextArea(){
         // verificar que el text field de supervisor tenga un número
