@@ -275,7 +275,6 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         
         int tipoDPago = PlantaFunciones.consultarTipoDPagoNUMPorCalendario(idCalendario);
         PlantaFunciones.generarCSV(fechaFinalDPagoSeleccionada, tipoDPago);
-        
         idCalendario = -1;
         fechaInicialDPagoSeleccionada = "";
         fechaFinalDPagoSeleccionada = "";

@@ -1829,18 +1829,21 @@ public class PlantaFunciones {
     }
     
     public static void generarCSV(String FechaDPago, int TipoDPago){
+        //C:/Guardar/prueba.csv
         Connection con = getConnection();
         Statement st;
         ResultSet rs;
         try {
             st = con.createStatement();
-            rs = st.executeQuery("SELECT  IdEmpleado, FechaDPago, MontoPagadoBruto, MontoPagadoNeto, Planta, TipoDPago " +
-                "FROM Planilla " +
-                "Where TipoDPago = " + TipoDPago + " and FechaDPago = " + FechaDPago + " INTO OUTFILE " + FechaDPago + "_" + TipoDPago + " FIELDS TERMINATED BY ',';");
+            String query = "Select IdEmpleado, FechaDPago, MontoPagadoBruto, MontoPagadoNeto, Planta, TipoDPago " +
+                "From Planilla Where TipoDPago = " +
+                  TipoDPago + " and FechaDPago = " + FechaDPago + " INTO OUTFILE " + "'C:/Guardar/" + FechaDPago + "_" + TipoDPago + ".csv'" + " FIELDS TERMINATED BY ',';";
+            rs = st.executeQuery(query);
             
             con.close();
         } catch (Exception e) {
-            System.out.println("Error");
+            
+            System.out.println("Errorvcvx");
         }
 //        SELECT  IdEmpleado, FechaDPago, MontoPagadoBruto, MontoPagadoNeto, Planta, TipoDPago  
 //                FROM Planilla 
