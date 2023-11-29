@@ -319,6 +319,51 @@ public class MenúConsultas extends javax.swing.JFrame {
 
     private void BtnConsulta4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConsulta4ActionPerformed
         // TODO add your handling code here:
+        String StrIdEmpleado = TxtIdEmpleado.getText();
+        if(PlantaFunciones.isNumeric(StrIdEmpleado) == false){
+            JOptionPane.showMessageDialog(this, 
+                    "SOLO DEBE INGRESAR NUMEROS EN EL APARTADO DE IDEMPLEADO", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int IdEmpleado = Integer.parseInt(StrIdEmpleado);
+        if(PlantaFunciones.VerificarIdEmpleadoEmpleados(IdEmpleado) == false){
+            JOptionPane.showMessageDialog(this, 
+                    "NO EXISTE UN EMPLEADO CON EL IDEMPLEADO INGRESADO", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (TxtFechaI.getText().equals("") || TxtFechaF.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Por favor colocar un a fecha de inicio y una final", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Pattern pattern = Pattern.compile("^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$");
+        Matcher mat = pattern.matcher(TxtFechaI.getText());
+        if(!mat.matches()){
+        JOptionPane.showMessageDialog(this, 
+                    "LA FECHA INGRESADA DEBE SER VÁLIDA Y CUMPLIR CON EL FORMATO YYYY-MM-DD", 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        mat = pattern.matcher(TxtFechaF.getText());
+        if(!mat.matches()){
+        JOptionPane.showMessageDialog(this, 
+                "LA FECHA INGRESADA DEBE SER VÁLIDA Y CUMPLIR CON EL FORMATO YYYY-MM-DD", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if(PlantaFunciones.FechaCSentido(TxtFechaI.getText(), TxtFechaF.getText()) == false){
+        JOptionPane.showMessageDialog(this, 
+                "LA FECHA DE INGRESO DEBE SER ANTERIOR A LA FECHA DE SALIDA", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+        }
+        
+        String Final = PlantaFunciones.Consulta4(IdEmpleado, TxtFechaI.getText(), TxtFechaF.getText());
+        TxtArea.setText(Final);
+        
     }//GEN-LAST:event_BtnConsulta4ActionPerformed
 
     private void BtnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnVolverActionPerformed

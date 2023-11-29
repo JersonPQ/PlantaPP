@@ -1853,7 +1853,38 @@ public class PlantaFunciones {
         }
     }
     
-    
+    public static String Consulta4(int IdEmpleado,String FechaI, String FechaF){
+        Connection con = getConnection();
+        
+        try {
+            CallableStatement stmt = con.prepareCall("{Call montoGanadoPorEmpleadoPorTiempo(?,?, ?)}");
+            stmt.setInt(1, IdEmpleado);
+            stmt.setString(2, FechaI);
+            stmt.setString(3, FechaF);
+            ResultSet rs = null;
+            
+            
+            stmt.execute();
+            rs = stmt.getResultSet();
+            String str = "IdEmpleado" + "\t\t\t|" + "Monto Bruto Ganado" + "\t\t\t|" + "Monto Neto Ganado" + "\t\t\t|\n\n";
+            
+            // while para imprimir todos los datos por tupla de el select
+            while (rs.next()) {
+                str += rs.getInt(1) + "\t\t\t|" +
+                        rs.getFloat(2) + "\t\t\t|" +
+                        rs.getFloat(3) + "\t\t\t|" + "\n";
+
+            }
+            
+            con.close();
+            stmt.close();
+            return str;
+        } catch (Exception e) {
+            System.out.println(e);
+            return "Error al realizar Consulta 3";
+        }
+        
+    }
     
     public static void main(String[] args) throws ParseException {
         String Fecha = generarFechas(2023,11,22,2023,11,27, "2023");
