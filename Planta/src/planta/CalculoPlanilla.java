@@ -20,6 +20,7 @@ public class CalculoPlanilla extends javax.swing.JFrame {
     private int idCalendario;
     private String fechaInicialDPagoSeleccionada;
     private String fechaFinalDPagoSeleccionada;
+    private String resultadoTextArea;
     
     private String[] lineasSalida = null;
     /**
@@ -207,7 +208,7 @@ public class CalculoPlanilla extends javax.swing.JFrame {
 
     private void BTNVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNVolverActionPerformed
         // TODO add your handling code here:
-        if (idCalendario != -1) {
+        if (idCalendario != -1 && resultadoTextArea.split("\n").length != 1) {
             JOptionPane.showMessageDialog(this, "Favor primero aceptar o rechazar la consulta de planilla rechazada", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -243,7 +244,7 @@ public class CalculoPlanilla extends javax.swing.JFrame {
         
         String[] elementosLinea;
         
-        String resultadoTextArea = "IdEmpleado \t Fecha Pago \t Salario Bruto \t Salario Neto \t Planta \t Tipo Pago \n";
+        resultadoTextArea = "IdEmpleado \t Fecha Pago \t Salario Bruto \t Salario Neto \t Planta \t Tipo Pago \n";
         for (int i = 1; i < lineasSalida.length; i++) {
             elementosLinea = lineasSalida[i].split("\t");
             if (PlantaFunciones.verificarIdEmpleadoEnPlanilla(Integer.parseInt(elementosLinea[0]), fechaFinalDPagoSeleccionada)) {
@@ -273,21 +274,11 @@ public class CalculoPlanilla extends javax.swing.JFrame {
             return;
         }
         
-        String empleadosVerificados = "";
-        String[] elementosLineaEmpleados;
-        for (int i = 1; i < lineasSalida.length; i++) {
-            elementosLineaEmpleados = lineasSalida[i].split("\t");
-            if (PlantaFunciones.verificarIdEmpleadoEnPlanilla(Integer.parseInt(elementosLineaEmpleados[0]), fechaFinalDPagoSeleccionada)) {
-                empleadosVerificados = elementosLineaEmpleados[0];
-                break;
-            }
-        }
-        
-        if (!empleadosVerificados.equals("")) {
+        if (resultadoTextArea.split("\n").length == 1) {
             JOptionPane.showMessageDialog(this, "No hay cálculos de planilla por aceptar", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-                
+           
         int tipoDPago = PlantaFunciones.consultarTipoDPagoNUMPorCalendario(idCalendario);
         PlantaFunciones.generarCSV2(fechaFinalDPagoSeleccionada, tipoDPago);
         idCalendario = -1;
@@ -306,19 +297,9 @@ public class CalculoPlanilla extends javax.swing.JFrame {
                 return;
             }
             
-            String empleadosVerificados = "";
-            String[] elementosLineaEmpleados;
-            for (int i = 1; i < lineasSalida.length; i++) {
-                elementosLineaEmpleados = lineasSalida[i].split("\t");
-                if (PlantaFunciones.verificarIdEmpleadoEnPlanilla(Integer.parseInt(elementosLineaEmpleados[0]), fechaFinalDPagoSeleccionada)) {
-                    empleadosVerificados = elementosLineaEmpleados[0];
-                    break;
-                }
-            }
-
-            if (!empleadosVerificados.equals("")) {
-                JOptionPane.showMessageDialog(this, "No hay cálculos de planilla por aceptar", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+            if (resultadoTextArea.split("\n").length == 1) {
+            JOptionPane.showMessageDialog(this, "No hay cálculos de planilla por aceptar", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
             }
             
             String[] elementosLinea;
