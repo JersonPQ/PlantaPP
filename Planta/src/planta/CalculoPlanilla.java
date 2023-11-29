@@ -207,7 +207,7 @@ public class CalculoPlanilla extends javax.swing.JFrame {
 
     private void BTNVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNVolverActionPerformed
         // TODO add your handling code here:
-        if (idCalendario == -1) {
+        if (idCalendario != -1) {
             JOptionPane.showMessageDialog(this, "Favor primero aceptar o rechazar la consulta de planilla rechazada", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -251,6 +251,8 @@ public class CalculoPlanilla extends javax.swing.JFrame {
                 String fechaDPago = fechaFinalDPagoSeleccionada;
                 float montoPagadoBruto = Float.parseFloat(elementosLinea[1]);
                 float montoPagadoNeto = Float.parseFloat(elementosLinea[2]);
+                
+                // cambiar por app
                 String planta = "Guayabo";
                 int tipoDPago = PlantaFunciones.consultarTipoDPagoNUMPorCalendario(idCalendario);
                 
@@ -270,6 +272,10 @@ public class CalculoPlanilla extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Favor consultar planilla", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        int tipoDPago = PlantaFunciones.consultarTipoDPagoNUMPorCalendario(idCalendario);
+        PlantaFunciones.generarCSV(fechaFinalDPagoSeleccionada, tipoDPago);
+        
         idCalendario = -1;
         fechaInicialDPagoSeleccionada = "";
         fechaFinalDPagoSeleccionada = "";

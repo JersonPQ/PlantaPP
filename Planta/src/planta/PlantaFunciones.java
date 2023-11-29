@@ -1828,6 +1828,25 @@ public class PlantaFunciones {
         }
     }
     
+    public static void generarCSV(String FechaDPago, int TipoDPago){
+        Connection con = getConnection();
+        Statement st;
+        ResultSet rs;
+        try {
+            st = con.createStatement();
+            rs = st.executeQuery("SELECT  IdEmpleado, FechaDPago, MontoPagadoBruto, MontoPagadoNeto, Planta, TipoDPago " +
+                "FROM Planilla " +
+                "Where TipoDPago = " + TipoDPago + " and FechaDPago = " + FechaDPago + " INTO OUTFILE " + FechaDPago + "_" + TipoDPago + " FIELDS TERMINATED BY ',';");
+            
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+//        SELECT  IdEmpleado, FechaDPago, MontoPagadoBruto, MontoPagadoNeto, Planta, TipoDPago  
+//                FROM Planilla 
+//                        Where IdEmpleado = IdEmpleadoN and FechaDPago = FechaDPagoN INTO OUTFILE Prueba FIELDS TERMINATED BY ',';
+    }
+    
     public static void main(String[] args) throws ParseException {
         String Fecha = generarFechas(2023,11,22,2023,11,27, "2023");
         System.out.println("Marca Entrada: " + ObtenerEntradaM(Fecha, 1));
